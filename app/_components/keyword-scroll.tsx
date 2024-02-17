@@ -1,6 +1,6 @@
 const KEYWORDS = [
   ['Full Stack Engineer', 'Technology Consultant', 'Freelance Developer'],
-  ['TanStack Query', 'React-Native', 'Astro', 'Next.js', 'tRPC', 'Drizzle', 'Prisma', 'Convex'],
+  ['TanStack Query', 'Prisma', 'React-Native', 'Astro', 'Next.js', 'tRPC', 'Drizzle', 'Convex'],
   ['UX Design', 'Web Accessibility', 'Web Standards', 'Web Performance', 'Compliance', 'Web Security', 'Search Engine Optimization'],
 ]
 
