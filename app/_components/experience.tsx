@@ -61,7 +61,7 @@ export function Experience() {
           {JOB_EXPERIENCE.map((job) => (
             <li key={job.id} className="mb-12">
               <div className="group relative grid pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50">
-                <div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-emerald-800/20 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg" />
+                <div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-emerald-800/10 dark:lg:group-hover:bg-emerald-800/20 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg" />
                 <header
                   className="z-10 mb-2 mt-1 text-xs font-semibold uppercase tracking-wide text-slate-500 sm:col-span-2"
                   aria-label={job.date}
@@ -72,7 +72,7 @@ export function Experience() {
                   <h3 className="font-medium leading-snug text-slate-200">
                     <div>
                       {job.company.link ? <a
-                        className="inline-flex items-baseline font-medium leading-tight text-accent dark:text-slate-200 hover:text-teal-300 focus-visible:text-teal-300 group/link text-base"
+                        className="inline-flex items-baseline font-medium leading-tight text-accent dark:hover:text-teal-300 dark:focus-visible:text-teal-300 group/link"
                         href={`/${job.company.link}`}
                         target="_blank"
                         rel="noreferrer noopener"
@@ -115,14 +115,14 @@ export function Experience() {
                   >
                     {job.technologies?.length ? job.technologies.map((technology, idx) => (
                       <li key={`${technology}-${idx}`} className="mr-1.5 mt-2">
-                        <div className="flex items-center rounded-full bg-teal-400/10 px-3 py-1 text-xs font-medium leading-5 text-teal-300 ">
+                        <div className="flex items-center rounded-full bg-blue-400/40 dark:bg-blue-400/10 px-3 py-1 text-xs font-medium leading-5 text-blue-800 dark:text-blue-300 ">
                           {technology}
                         </div>
                       </li>
                     )) : null}
                     {job.services?.length ? job.services.map((service, idx) => (
                       <li key={`${service}-${idx}`} className="mr-1.5 mt-2">
-                        <div className="flex items-center rounded-full bg-blue-400/10 px-3 py-1 text-xs font-medium leading-5 text-blue-300 ">
+                        <div className="flex items-center rounded-full bg-teal-400/40 dark:bg-teal-400/10 px-3 py-1 text-xs font-medium leading-5 text-teal-800 dark:text-teal-300 ">
                           {service}
                         </div>
                       </li>
@@ -137,7 +137,7 @@ export function Experience() {
                       {job.relatedLinks.map((link) => (
                         <li key={link.url} className="mr-4">
                           <a
-                            className="relative mt-2 inline-flex items-center text-sm font-medium text-slate-300 hover:text-teal-300 focus-visible:text-teal-300"
+                            className="relative mt-2 inline-flex items-center text-sm font-medium text-slate-600 dark:text-slate-300 dark:hover:text-teal-300 dark:focus-visible:text-teal-300"
                             href={link.url}
                             target="_blank"
                             rel="noreferrer noopener"
