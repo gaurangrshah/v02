@@ -19,6 +19,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* <Script
+          src='https://flackr.github.io/scroll-timeline/dist/scroll-timeline.js'
+        /> */}
+      </head>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>{children}</ThemeProvider>
       </body>
