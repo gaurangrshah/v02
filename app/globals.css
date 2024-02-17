@@ -42,8 +42,10 @@
   }
 
   .dark {
-    --background: 219, 39%, 12%; /* #121A29 */
-    --foreground: 0, 0%, 88%; /* #e0e0e0 */
+    /* --background: 219, 39%, 12%; #121A29 */
+    --background: 141, 100%, 5%; /* #001A09 */
+    /* --foreground: 0, 0%, 88%; #e0e0e0 */
+    --foreground: 220, 13%, 91%; /* #e5e7eb */
 
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
@@ -86,33 +88,53 @@
   html,
   body,
   :root {
+    scroll-behavior: smooth;
     height: 100%; /* Flexbox height fix */
   }
   body {
-    @apply bg-white text-foreground dark:bg-background;
+    @apply bg-background text-foreground;
   }
   .tw-glass {
     @apply rounded-md border-foreground shadow-[5px_5px_10px_-5px_foreground] backdrop-blur-md;
+  }
+
+  @keyframes scroll-left {
+    from {
+      transform: translateX(0%);
+    }
+    to {
+      transform: translateX(-100%);
+    }
+  }
+  @keyframes scroll-right {
+    from {
+      transform: translateX(-60%);
+    }
+    to {
+      transform: translateX(0%);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .gs-keyword-scroll-list__row:nth-child(1),
+    .gs-keyword-scroll-list__row:nth-child(3) {
+      animation: scroll-left auto linear forwards;
+      animation-timeline: scroll(root block);
+    }
+
+    .gs-keyword-scroll-list__row:nth-child(2) {
+      animation: scroll-right auto linear forwards;
+      animation-timeline: scroll(root block);
+    }
   }
 }
 
 @utilities {
   .text-balance {
-    text-align: balance;
+    text-align:;
   }
-  .text-h1 {
-    @apply: text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl xl:leading-none;
-  }
-  .text-h2 {
-    @apply: text-2xl font-bold tracking-tighter sm:text-4xl xl:text-5xl xl:leading-none;
-  }
-  .text-h3 {
-    @apply: text-xl font-bold tracking-tighter sm:text-3xl xl:text-4xl xl:leading-none;
-  }
-  .text-h4 {
-    @apply: text-lg font-bold tracking-tighter sm:text-2xl xl:text-3xl xl:leading-none;
-  }
-  .text-h4 {
-    @apply: text-md font-bold tracking-tighter sm:text-xl xl:text-2xl xl:leading-none;
+
+  .text-pretty {
+    text-wrap: pretty;
   }
 }
