@@ -3,7 +3,8 @@
   "packages": [
     "shadcn-ui",
     "drizzle",
-    "lucia"
+    "lucia",
+    "resend"
   ],
   "preferredPackageManager": "pnpm",
   "t3": false,
