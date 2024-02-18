@@ -10,8 +10,8 @@ const LINKS = [
     label: 'Experience',
   },
   {
-    href: '#projects',
-    label: 'Projects',
+    href: '#experiments',
+    label: 'Experiments',
   },
   {
     href: '#blog',

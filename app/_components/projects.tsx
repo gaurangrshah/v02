@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/popover';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
-const ProjectSchema = z.object({
+const experimentSchema = z.object({
   title: z.string(),
   description: z.string(),
   image: z.string(),
@@ -18,9 +18,9 @@ const ProjectSchema = z.object({
   stars: z.number().optional().nullable()
 });
 
-type Project = z.infer<typeof ProjectSchema>;
+type Experiment = z.infer<typeof experimentSchema>;
 
-const PROJECTS: Project[] = [
+const EXPERIMENTS: Experiment[] = [
   {
     title: 'Plura: Design Agency CRM & Hosting PAAS',
     description:
@@ -51,7 +51,7 @@ const PROJECTS: Project[] = [
     description:
       'A working clone of the popular chat app Discord. Built with Next.JS, Tailwind, Clerk, Convex, UploadThing, and more.',
     image: 'https://brittanychiang.com/_next/image?url=%2Fimages%2Fprojects%2Fcourse-card.png&w=640&q=75',
-    link: '#',
+    link: null,
     technologies: ['Next.js', 'TailwindCSS', 'Prisma', 'PlanetScale', 'Live-Kit', 'Heroku']
   },
   {
@@ -64,10 +64,10 @@ const PROJECTS: Project[] = [
   },
 ];
 
-export function Projects() {
+export function Experiments() {
   return (
     <section
-      id="projects"
+      id="experiments"
       className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
       aria-label="Selected projects"
     >
@@ -78,23 +78,23 @@ export function Projects() {
       </div>
       <ScrollArea className="h-[30rem] w-full rounded-md px-3 pt-4">
         <ul className="group/list pr-2">
-          {PROJECTS.map((project, i) => (
+          {EXPERIMENTS.map((experiment, i) => (
             <li key={i} className="mb-12">
               <div className="group relative grid gap-4 pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50 md:px-2">
                 <div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-emerald-800/10 dark:lg:group-hover:bg-emerald-800/20 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg" />
                 <div className="z-10 sm:order-2 sm:col-span-6">
                   <h3>
-                    {project.link ? (
+                    {experiment.link ? (
                       <a
                         className="inline-flex items-baseline font-medium leading-tight text-accent dark:hover:text-teal-300 dark:focus-visible:text-teal-300 group/link text-base"
-                        href={project.link}
+                        href={experiment.link}
                         target="_blank"
                         rel="noreferrer noopener"
-                        aria-label={`${project.title} (opens in a new tab)`}
+                        aria-label={`${experiment.title} (opens in a new tab)`}
                       >
                         <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block" />
                         <span>
-                          {project.title}{" "}
+                          {experiment.title}{" "}
                           <span className="inline-block">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -117,7 +117,7 @@ export function Projects() {
                         <PopoverTrigger>
                           <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block" />
                           <span className='text-accent dark:hover:text-teal-300 dark:focus-visible:text-teal-300'>
-                            {project.title}{" "}
+                            {experiment.title}{" "}
                           </span>
                         </PopoverTrigger>
                         <PopoverContent>
@@ -129,9 +129,9 @@ export function Projects() {
                     )}
                   </h3>
                   <p className="mt-2 text-xs leading-normal">
-                    {project.description}
+                    {experiment.description}
                   </p>
-                  {project?.stars && (
+                  {experiment?.stars && (
                     <a
                       className="relative mt-2 inline-flex items-center text-sm font-medium text-slate-300 hover:text-teal-300 focus-visible:text-teal-300"
                       href="https://github.com/bchiang7/spotify-profile"
@@ -152,12 +152,12 @@ export function Projects() {
                           clipRule="evenodd"
                         />
                       </svg>
-                      <span>{project.stars}</span>
+                      <span>{experiment.stars}</span>
                     </a>
                   )}
                 </div>
                 <Image
-                  alt={`${project.title} marketing card`}
+                  alt={`${experiment.title} marketing card`}
                   loading="lazy"
                   width={200}
                   height={48}
@@ -165,7 +165,7 @@ export function Projects() {
                   data-nimg={1}
                   className="rounded border-2 border-slate-200/10 transition group-hover:border-slate-200/30 sm:order-1 sm:col-span-2 sm:translate-y-1"
                   style={{ color: 'transparent' }}
-                  src={project.image}
+                  src={experiment.image}
                 />
               </div>
             </li>
