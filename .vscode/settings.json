@@ -1,14 +1,19 @@
 {
-   "tsImportSorter.configuration.groupRules": [
+  "tsImportSorter.configuration.groupRules": [
     "^react(-dom)?$",
-    "^next",
-    "^next/",
-    "^lucia",
-    "^@prisma/",
+    ["^next", "^next/", "^@vercel/"],
+    ["^tailwind-merge", "^tailwind-animate", "^tailwindcss", "^next-themes"],
+    ["^lucia", "^@lucia-auth/"],
+    [
+      "^drizzle-zod",
+      "^drizzle-orm",
+      "^drizzle-kit",
+      "^zod",
+      "^nanoid",
+      "^date-fns/"
+    ],
     "^lucide-react",
-    "^date-fns/",
-    ["^uuid", "^zod", "^@hookform/", "^react-hook-form"],
-    ["^cmdk", "^@hello-pangea/"],
+    ["^cmdk", "^sonner"],
     ["^stripe", "^@stripe/"],
     {},
     "^@/providers/",
