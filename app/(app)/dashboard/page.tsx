@@ -1,5 +1,15 @@
-import AuthForm from "@/components/auth/Form";
-import { getUserAuth } from "@/lib/auth/utils";
+import type { Metadata } from 'next';
+
+import AuthForm from '@/components/auth/Form';
+
+import { getUserAuth } from '@/lib/auth/utils';
+
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false,
+  }
+}
 
 export default async function Home() {
   const { session } = await getUserAuth();
