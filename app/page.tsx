@@ -22,7 +22,6 @@ export default function LandingPage() {
           <Blog />
           <Footer />
         </main>
-        {/* <WhoButton /> */}
       </div>
     </Wrapper>
   );
