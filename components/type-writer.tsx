@@ -9,6 +9,8 @@ import { cn } from '@/lib/utils';
 
 import { Box } from './Box';
 
+// @SEE: https://www.julienthibeaut.xyz/lab/text-typing-effect
+
 export type AsProp = 'div' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span' | 'small';
 type TextTypingEffectProps = {
   as: AsProp;
