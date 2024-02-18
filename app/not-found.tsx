@@ -1,5 +1,7 @@
 import Image from 'next/image';
 
+import { TextTypingEffectWithTextsFadeOut } from '@/components/type-writer';
+
 import NotFoundMenuBar from './_components/buttons/not-found-menu-bar';
 
 export default function NotFound() {
@@ -15,7 +17,7 @@ export default function NotFound() {
           loading="eager"
         />
         <div className='absolute top-48 w-96 h-36 bg-background/60 z-20 rounded-md shadow-lg backdrop-blur-lg px-6 flex justify-center items-center'>
-          <h1 className='text-3xl text-center font-bold text-foreground/70 drop-shadow-md'>You&apos;ve come too far... seen too much</h1>
+          <TextTypingEffectWithTextsFadeOut as="h2" content={["You've gone too far...", "and seen too much", "...", "Turn back now...", "Well? What're you waiting for?"]} className='text-2xl text-center font-bold text-foreground/70 drop-shadow-md' />
         </div>
       </div>
       <NotFoundMenuBar />
