@@ -1,7 +1,16 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { useTheme } from "next-themes";
+import type { Metadata } from 'next';
+import { useTheme } from 'next-themes';
+
+import { Button } from '@/components/ui/button';
+
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false,
+  }
+}
 
 export default function Page() {
   const { setTheme } = useTheme();
