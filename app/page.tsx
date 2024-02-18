@@ -4,7 +4,7 @@ import { Experience } from './_components/experience';
 import { Footer } from './_components/footer';
 import { Header } from './_components/header';
 import { KeywordScroll } from './_components/keyword-scroll';
-import { Projects } from './_components/projects';
+import { Experiments } from './_components/projects';
 import { SkipToContentLink } from './_components/skip-link';
 import { Wrapper } from './_components/wrapper';
 
@@ -18,7 +18,7 @@ export default function LandingPage() {
           <About />
           <KeywordScroll />
           <Experience />
-          <Projects />
+          <Experiments />
           <Blog />
           <Footer />
         </main>
