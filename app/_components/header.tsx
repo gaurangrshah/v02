@@ -54,6 +54,7 @@ export function Header() {
                 </a>
               </li>
             ))} */}
+            {/* <Resend /> */}
           </ul>
         </nav>
       </div>
