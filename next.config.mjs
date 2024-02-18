@@ -4,11 +4,6 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'brittanychiang.com',
-        port: '',
-      },
-      {
-        protocol: 'https',
         hostname: 'camo.githubusercontent.com',
         port: '',
       },

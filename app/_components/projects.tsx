@@ -50,7 +50,7 @@ const EXPERIMENTS: Experiment[] = [
     title: 'Discord Clone',
     description:
       'A working clone of the popular chat app Discord. Built with Next.JS, Tailwind, Clerk, Convex, UploadThing, and more.',
-    image: 'https://brittanychiang.com/_next/image?url=%2Fimages%2Fprojects%2Fcourse-card.png&w=640&q=75',
+    image: '/disc-screenshot.png',
     link: null,
     technologies: ['Next.js', 'TailwindCSS', 'Prisma', 'PlanetScale', 'Live-Kit', 'Heroku']
   },
@@ -134,10 +134,10 @@ export function Experiments() {
                   {experiment?.stars && (
                     <a
                       className="relative mt-2 inline-flex items-center text-sm font-medium text-slate-300 hover:text-teal-300 focus-visible:text-teal-300"
-                      href="https://github.com/bchiang7/spotify-profile"
+                      href=""
                       target="_blank"
                       rel="noreferrer noopener"
-                      aria-label="599 stars on GitHub (opens in a new tab)"
+                      aria-label={`${experiment.stars} stars on GitHub (opens in a new tab)`}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
