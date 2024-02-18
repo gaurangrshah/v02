@@ -12,6 +12,7 @@
       "^nanoid",
       "^date-fns/"
     ],
+    "^resend",
     "^lucide-react",
     ["^cmdk", "^sonner"],
     ["^stripe", "^@stripe/"],
