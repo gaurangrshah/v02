@@ -1,12 +1,15 @@
-import { ModeToggle } from '@/components/ui/ThemeToggle';
+import { Analytics } from '@vercel/analytics/react';
 
-export default function Providers({ children }: { children: React.ReactNode }) {
+import { ThemeProvider } from '@/components/ThemeProvider';
+
+export default function RootProviders({ children }: { children: React.ReactNode }) {
+
   return (
     <>
-      <div className="fixed top-10 right-20">
-        <ModeToggle />
-      </div>
-      {children}
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        {children}
+      </ThemeProvider>
+      <Analytics />
     </>
   )
 }
