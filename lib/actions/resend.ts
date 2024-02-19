@@ -6,20 +6,23 @@ import { emailConfig, resend } from '@/lib/email/index';
 
 import { emailSchema } from '../email/utils';
 
-export async function sendEmail(state: any, formData: FormData) {
+export async function sendEmail(prevState: any, formData: FormData) {
   try {
     const result = emailSchema.safeParse({
-      name: formData.get('name'),
+      name: 'new-user' || formData.get('name'),
       email: formData.get('email'),
     });
 
     if (result.success) {
       const data = await resend.emails.send({
         to: [String(formData.get('email'))],
-        react: EmailTemplate({ firstName: String(formData.get('name')) }),
+        react: EmailTemplate({
+          firstName: String('new-user' || formData.get('name')),
+        }),
         ...emailConfig,
       });
-      return { data };
+
+      return { data, message: 'Email sent successfully' };
     }
 
     if (!result.success) {
