@@ -1,3 +1,7 @@
+import { ComponentType } from 'react';
+
+import { ButtonProps } from '@/components/ui/button';
+
 import { cn } from '@/lib/utils';
 
 type MenuAction = {
@@ -10,8 +14,8 @@ type MenuItem = {
   label: string
 } & MenuAction
 
-type MenubarProps = {
-  items: MenuItem[]
+export type MenubarProps = {
+  items: MenuItem[] | ComponentType<ButtonProps>[]
 }
 
 const styles = [
@@ -31,7 +35,7 @@ export function Menubar({ items }: MenubarProps) {
         if ('href' in item) {
           return (
             <a key={index} href={item.href} className={cn(defaultStyle, firstIndex && styles[index], lastIndex && styles[items.length - 1])}>
-              {item.label}
+              {item?.label}
             </a>
           )
         }
@@ -42,6 +46,21 @@ export function Menubar({ items }: MenubarProps) {
             </button>
           )
         }
+      })}
+    </div>
+  )
+}
+export function Menubar2({ items }: MenubarProps) {
+  return (
+    <div className="inline-flex rounded-md shadow-sm" role="group">
+
+      {items.map((item, index) => {
+        const firstIndex = index === 0;
+        const lastIndex = index === items.length - 1;
+        const Component = item as ComponentType<ButtonProps>
+        return (
+          <Component key={index} className={cn(defaultStyle, firstIndex && styles[index], lastIndex && styles[1], "px-0 py-0")} size="icon" />
+        )
       })}
     </div>
   )
