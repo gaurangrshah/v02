@@ -1,22 +1,10 @@
 import { Socials } from './socials';
 
 const LINKS = [
-  {
-    href: '#about',
-    label: 'About',
-  },
-  {
-    href: '#experience',
-    label: 'Experience',
-  },
-  {
-    href: '#experiments',
-    label: 'Experiments',
-  },
-  {
-    href: '#blog',
-    label: 'Blog',
-  }
+  { href: '#about', label: 'About' },
+  { href: '#experience', label: 'Experience' },
+  { href: '#experiments', label: 'Experiments' },
+  { href: '#blog', label: 'Blog' }
 ]
 
 export function Header() {
@@ -44,19 +32,9 @@ export function Header() {
                 </a>
               </li>
             ))}
-            {/* {LINKS.map((link, i) => (
-              <li key={link.href} className={`row-span-1 rounded-xl border-2 border-slate-400/10 bg-neutral-100 p-4 dark:bg-neutral-900 ${i === 2 || i === 6 ? "col-span-2" : ""}`}>
-                <a className="group flex items-center py-3" href={link.href}>
-                  <span className="nav-indicator mr-4 h-px w-8 bg-slate-600 transition-all group-hover:w-16 group-hover:bg-slate-200 group-focus-visible:w-16 group-focus-visible:bg-slate-200 motion-reduce:transition-none" />
-                  <span className="nav-text text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-slate-200 group-focus-visible:text-slate-200">
-                    {link.label}
-                  </span>
-                </a>
-              </li>
-            ))} */}
-            {/* <Resend /> */}
           </ul>
         </nav>
+        {/* <Resend /> */}
       </div>
       <Socials />
     </header>
