@@ -52,7 +52,7 @@ export function Footer() {
         >
           Kirimase
         </a>
-        , deployed with{" "}
+        , deployed on{" "}
         <a
           href="https://vercel.com/"
           className="font-medium text-slate-400 hover:text-accent focus-visible:text-accent"
