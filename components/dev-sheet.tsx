@@ -1,5 +1,6 @@
+import { PanelRight } from 'lucide-react';
+
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
   Sheet,
@@ -12,36 +13,34 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 
-export function SheetDemo() {
+import { cn } from '@/lib/utils';
+
+export function DevSheet({ className }: { className?: string }) {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline" className="fixed bottom-10 right-20 text-white">Open</Button>
+        <Button variant="outline" size="icon" className={cn("bg-transparent hover:bg-accent/70 dark:hover:bg-white/30 text-foreground dark:bg-transparent dark:text-foreground z-50", className)}>
+          <PanelRight size={16} />
+        </Button>
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle>Edit profile</SheetTitle>
+          <SheetTitle>GShah Dev</SheetTitle>
           <SheetDescription>
-            Make changes to your profile here. Click save when you&apos;re done.
+            Resources
           </SheetDescription>
         </SheetHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-right">
-              Name
+              Colors
             </Label>
-            <Input id="name" value="Pedro Duarte" className="col-span-3" />
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Username
-            </Label>
-            <Input id="username" value="@peduarte" className="col-span-3" />
-          </div>
+
         </div>
         <SheetFooter>
-          <SheetClose asChild>
-            <Button type="submit">Save changes</Button>
+          <SheetClose>
+            {/* <Button type="submit">Save changes</Button> */}
           </SheetClose>
         </SheetFooter>
       </SheetContent>
