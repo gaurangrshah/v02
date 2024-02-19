@@ -17,13 +17,15 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
+import { cn } from '@/lib/utils';
+
 export function ModeToggle() {
   const { setTheme } = useTheme();
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="bg-transparent hover:bg-accent/70 text-foreground dark:bg-transparent dark:hover:bg-secondary/70 dark:text-foreground">
+        <Button variant="ghost" size="icon" className="bg-transparent hover:bg-accent/70 text-foreground dark:bg-transparent dark:hover:bg-white/30 dark:text-foreground">
           <SunIcon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
           <MoonIcon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
           <span className="sr-only">Toggle theme</span>
@@ -45,14 +47,14 @@ export function ModeToggle() {
 }
 
 
-export function ModeToggle2() {
+export function ModeToggle2({ className }: { className?: string }) {
   const { theme, setTheme } = useTheme();
 
 
   function switchToggle() {
     switch (theme) {
       case "dark":
-        return <SunIcon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+        return <SunIcon className="h-[1.2rem] w-[1.2rem] dark:rotate-0 dark:scale-100 transition-all rotate-90 scale-0 duration-300" />
         break;
       case "light":
         return <MoonIcon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
@@ -66,7 +68,7 @@ export function ModeToggle2() {
   const onClick = theme === 'light' ? () => setTheme('dark') : () => setTheme('light')
 
   return (
-    <Button className="bg-transparent hover:bg-accent text-foreground" variant="ghost" size="icon" onClick={onClick}>
+    <Button className={cn(className, "bg-transparent hover:bg-accent/30 dark:hover:bg-white/20 text-foreground dark:bg-transparent dark:text-gray-300")} variant="ghost" size="icon" onClick={onClick}>
       {switchToggle()}
     </Button >
   )
