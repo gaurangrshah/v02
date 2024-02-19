@@ -75,7 +75,7 @@ export function Experiments() {
     >
       <SectionTitle>
         <h2 className="text-sm font-bold uppercase tracking-widest">
-          Projects
+          Experiments
         </h2>
       </SectionTitle>
       <ScrollArea className="h-[30rem] w-full rounded-md px-3 pt-4">
@@ -118,9 +118,9 @@ export function Experiments() {
                       <Popover>
                         <PopoverTrigger>
                           <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block" />
-                          <span className='text-accent dark:hover:text-teal-300 dark:focus-visible:text-teal-300'>
+                          <p className='text-accent dark:hover:text-teal-300 dark:focus-visible:text-teal-300 text-left'>
                             {experiment.title}{" "}
-                          </span>
+                          </p>
                         </PopoverTrigger>
                         <PopoverContent>
                           {/* display coming soon message in popover content */}
