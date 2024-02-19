@@ -1,3 +1,4 @@
+import { NewsletterForm } from './newsletter-form';
 import { Socials } from './socials';
 
 const LINKS = [
@@ -34,9 +35,11 @@ export function Header() {
             ))}
           </ul>
         </nav>
-        {/* <Resend /> */}
       </div>
-      <Socials />
+      <div>
+        <NewsletterForm />
+        <Socials />
+      </div>
     </header>
   )
 }
