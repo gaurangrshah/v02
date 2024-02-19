@@ -61,7 +61,7 @@ export function NewsletterForm() {
 
   return (
     <div className='relative flex items-center space-y-2'>
-      <Button onClick={() => setShow(prev => !prev)} className={cn(show ? "absolute z-10 mt-2 bg-gray-800/70" : "z-0 relative", state?.data && "hidden", "scale-75 bg-transparent border-2 font-medium rounded-md hover:bg-gray-800 border-slate-700 text-slate-600 hover:text-slate-400 transition-colors")} size="icon">
+      <Button onClick={() => setShow(prev => !prev)} className={cn(show ? "absolute z-10 mt-2 bg-gray-800/70 border-none" : "z-0 relative", state?.data && "hidden", "scale-75 bg-transparent border-2 font-medium rounded-md hover:bg-gray-800 border-slate-700 text-slate-600 hover:text-slate-400 transition-colors")} size="icon">
         {show ? <X className="text-current" /> : <Mail className="text-current" />}
       </Button>
       <div className={cn("relative text-xs font-base text-slate-300 rounded-md p-4 -ml-4 max-w-md group transition-transform duration-300 ease-in-out w-full pr-20", show ? "scale-x-100" : "scale-x-0")} role="group"
