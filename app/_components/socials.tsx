@@ -85,7 +85,7 @@ const SOCIALS: Social[] = [
 
 export function Socials() {
   return (
-    <ul className="ml-1 mt-8 flex items-center gap-x-2" aria-label="Social media">
+    <ul className="ml-1 flex items-center gap-x-2" aria-label="Social media">
       {SOCIALS.map((social) => (
         <li key={social.title} className="text-xs shrink-0 hover:-translate-y-3 transition-transform ease-cubic fill-mode-both rounded-md hover:shadow-md px-2 py-1">
           <a
