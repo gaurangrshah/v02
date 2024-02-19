@@ -82,6 +82,11 @@ module.exports = {
         flip: 'flip 6s infinite steps(2, end)',
         rotate: 'rotate 3s linear infinite both',
       },
+      transitionTimingFunction: {
+        'in-expo': 'cubic-bezier(0.95, 0.05, 0.795, 0.035)',
+        'out-expo': 'cubic-bezier(0.19, 1, 0.22, 1)',
+        cubic: 'cubic-bezier(0.645,0.045,0.355,1)',
+      },
     },
   },
   plugins: [require('tailwindcss-animate')],
