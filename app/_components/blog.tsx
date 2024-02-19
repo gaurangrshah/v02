@@ -8,6 +8,8 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 
 import { truncate } from '@/lib/utils';
 
+import { SectionTitle } from './section-title';
+
 const ARTICLES = [
   {
     title: "How I Learn",
@@ -108,11 +110,11 @@ export async function Blog() {
       className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
       aria-label="Blog posts"
     >
-      <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0">
-        <h2 className="text-sm font-bold uppercase tracking-widest text-secondary">
+      <SectionTitle>
+        <h2 className="text-sm font-bold uppercase tracking-widest">
           Articles
         </h2>
-      </div>
+      </SectionTitle>
       <div>
         <ScrollArea className="h-[30rem] w-full rounded-md px-3 pt-4">
           <ul className="group/list">
