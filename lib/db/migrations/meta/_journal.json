@@ -2,5 +2,12 @@
   "version": "5",
   "dialect": "sqlite",
   "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1708445071428,
+      "tag": "0000_bright_azazel",
+      "breakpoints": true
+    }
   ]
 }
