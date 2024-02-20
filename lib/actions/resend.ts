@@ -17,6 +17,12 @@ export async function sendEmail(prevState: any, formData: FormData) {
     });
 
     if (result.success) {
+      // generate a secure token to be used to verify the user's email -- token should be verifiable
+      // and unique to the user
+      const token =
+        Math.random().toString(36).substring(2, 15) +
+        Math.random().toString(36).substring(2, 15);
+
       const data = await resend.emails.send({
         to: [String(formData.get('email'))],
         react: SubscriberVerificationEmail({
