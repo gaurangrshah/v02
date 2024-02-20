@@ -1,32 +1,49 @@
 'use server';
 
-import SubscriberVerificationEmail
-  from '@/emails/subscriber-verification-email';
-import {
-  emailConfig,
-  resend,
-} from '@/lib/email/index';
+import { nanoid } from 'nanoid';
 
+import SubscriberVerificationEmail from '@/emails/subscriber-verification-email';
+import { emailConfig, resend } from '@/lib/email/index';
+
+import { db } from '../db';
+import { subscribers } from '../db/schema/auth';
 import { emailSchema } from '../email/utils';
 
 export async function sendEmail(prevState: any, formData: FormData) {
   try {
     const result = emailSchema.safeParse({
-      name: 'subscriber' || formData.get('name'),
+      name: formData.get('name'),
       email: formData.get('email'),
     });
 
     if (result.success) {
-      // generate a secure token to be used to verify the user's email -- token should be verifiable
-      // and unique to the user
+      const email = String(formData.get('email'));
+      const name = String(formData.get('name'));
+
       const token =
         Math.random().toString(36).substring(2, 15) +
         Math.random().toString(36).substring(2, 15);
 
+      const subscriber = await db.insert(subscribers).values({
+        id: nanoid(),
+        email,
+        verified: false,
+        verificationToken: token,
+        // add createdAt timestamp in seconds
+      });
+
+      if (!subscriber) {
+        throw new Error('Error creating subscription');
+      }
+
       const data = await resend.emails.send({
-        to: [String(formData.get('email'))],
+        to: [email],
         react: SubscriberVerificationEmail({
-          firstName: String('subscriber' || formData.get('name')),
+          name: name,
+          tokenCallback:
+            process.env.NODE_ENV === 'development'
+              ? `${process.env.NEXT_PUBLIC_BASE_URL}/verify/${token}/${email}`
+              : `${`https://gshahdev.com`}/verify/${token}/${email}`,
         }),
         ...emailConfig,
       });

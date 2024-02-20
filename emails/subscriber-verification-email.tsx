@@ -14,7 +14,8 @@ import {
 } from '@react-email/components';
 
 interface subscriberEmailProps {
-  firstName?: string;
+  name?: string;
+  tokenCallback: string;
 }
 
 const baseUrl = process.env.VERCEL_URL
@@ -22,7 +23,8 @@ const baseUrl = process.env.VERCEL_URL
   : "";
 
 export default function SubscriberVerificationEmail({
-  firstName,
+  name,
+  tokenCallback,
 }: subscriberEmailProps) {
   return (
     <Html>
@@ -31,17 +33,17 @@ export default function SubscriberVerificationEmail({
       <Body style={main}>
         <Container style={container}>
           <Img
-            src={process.env.NODE_ENV === 'development' ? `${process.env.NEXT_PUBLIC_BASE_URL}/logo.png` : `${process.env.NEXT_PUBLIC_BASE_URL}/logo.png`}
+            src={`https://www.gshahdev.com/logo.png`}
             width="40"
             height="33"
             alt="GShah Dev logo"
           />
           <Section>
-            <Text style={text}>Hi {firstName},</Text>
+            <Text style={text}>Hi {name},</Text>
             <Text style={text}>
               Someone recently signed up to the G.Shah Dev mailing list. If this was you, you can click here:
             </Text>
-            <Button style={button} href={'https://gshahdev.com'}>
+            <Button style={button} href={tokenCallback}>
               Verify Email
             </Button>
             <Text style={text}>
@@ -49,7 +51,7 @@ export default function SubscriberVerificationEmail({
               request this, just ignore and delete this message.
             </Text>
             <Text style={text}>
-              To keep your account secure, please don&apos;t forward this email
+              For security reasons, we ask that you don&apos;t forward this email
               to anyone. See our Help Center for{" "}
               <Link style={anchor} href="https://gshahdev.com/coming-soon">
                 more security information.
@@ -64,8 +66,8 @@ export default function SubscriberVerificationEmail({
 };
 
 SubscriberVerificationEmail.PreviewProps = {
-  firstName: "Alan",
-  // resetPasswordLink: "https://dropbox.com",
+  name: "Alan",
+  tokenCallback: "https://gshahdev.com/verify?token=123&email=user%40gshahdev.com",
 } as subscriberEmailProps;
 
 
