@@ -16,8 +16,6 @@ export function ShinyInput({ field, children }: ShinyInputProps) {
   const [isFocused, setIsFocused] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [opacity, setOpacity] = useState(0);
-  const [show, setShow] = useState(false)
-
 
   const handleMouseMove = (e: React.MouseEvent<HTMLInputElement>) => {
     if (!divRef.current || isFocused) return;
@@ -67,7 +65,6 @@ export function ShinyInput({ field, children }: ShinyInputProps) {
         aria-hidden="true"
         className="border-[hsl(var)] pointer-events-none absolute left-0 top-0 z-10 h-11 w-full cursor-default rounded-md border bg-transparent p-3.5 opacity-0 transition-opacity duration-500 placeholder:select-none"
       />
-
       {children}
     </div >
   )
