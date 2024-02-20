@@ -12,7 +12,7 @@ import { emailSchema } from '../email/utils';
 export async function sendEmail(prevState: any, formData: FormData) {
   try {
     const result = emailSchema.safeParse({
-      name: 'new-user' || formData.get('name'),
+      name: 'subscriber' || formData.get('name'),
       email: formData.get('email'),
     });
 
@@ -20,7 +20,7 @@ export async function sendEmail(prevState: any, formData: FormData) {
       const data = await resend.emails.send({
         to: [String(formData.get('email'))],
         react: SubscriberVerificationEmail({
-          firstName: String('new-user' || formData.get('name')),
+          firstName: String('subscriber' || formData.get('name')),
         }),
         ...emailConfig,
       });
