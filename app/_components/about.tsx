@@ -20,7 +20,7 @@ export function About() {
           These days I leverage my experience in building and scaling on the web to solve complex problems faced by startups and SMBs. My goal is to always help avoid common pitfalls early on that most businesses face when they first get into the tech industry. I try to keep my finger on the pulse to ensure I am always able to leverage proven technologies and best practices to help my clients succeed.
         </p>
         <p className="text-pretty">
-          When I&apos;m not in front of a screen, I love hiking, spending time with family, and reading. I also have an insatiable appetite for music. For years I toured as a DJ throughout the US and Europe and got a chance to see the world in what I feel was a very unique way.
+          When I&apos;m not in front of a screen, I love hiking, spending time with family, and reading. I also have an insatiable appetite for music and try to scratch my itch every chance I get.
         </p>
       </div>
     </section>
