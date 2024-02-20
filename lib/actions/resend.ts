@@ -1,8 +1,11 @@
 'use server';
 
-import { EmailTemplate } from '@/components/emails/FirstEmail';
-
-import { emailConfig, resend } from '@/lib/email/index';
+import SubscriberVerificationEmail
+  from '@/emails/subscriber-verification-email';
+import {
+  emailConfig,
+  resend,
+} from '@/lib/email/index';
 
 import { emailSchema } from '../email/utils';
 
@@ -16,7 +19,7 @@ export async function sendEmail(prevState: any, formData: FormData) {
     if (result.success) {
       const data = await resend.emails.send({
         to: [String(formData.get('email'))],
-        react: EmailTemplate({
+        react: SubscriberVerificationEmail({
           firstName: String('new-user' || formData.get('name')),
         }),
         ...emailConfig,
