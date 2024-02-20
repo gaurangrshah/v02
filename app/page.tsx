@@ -1,3 +1,5 @@
+import ToastCenter from '@/components/toast-center';
+
 import { About } from './_components/about';
 import { Blog } from './_components/blog';
 import { Experience } from './_components/experience';
@@ -14,15 +16,16 @@ export default function LandingPage() {
       <SkipToContentLink />
       <div className="relative lg:flex lg:justify-between lg:gap-4">
         <Header />
-        <main id="content" className="pt-24 lg:w-1/2 lg:py-24">
+        <div id="content" className="pt-24 lg:w-1/2 lg:py-24">
           <About />
           <KeywordScroll />
           <Experience />
           <Experiments />
           <Blog />
           <Footer />
-        </main>
+        </div>
       </div>
+      <ToastCenter />
     </Wrapper>
   );
 }

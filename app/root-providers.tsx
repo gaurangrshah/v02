@@ -1,6 +1,7 @@
 import { Analytics } from '@vercel/analytics/react';
 
 import { ThemeProvider } from '@/components/ThemeProvider';
+import { Toaster } from '@/components/ui/sonner';
 
 export default function RootProviders({ children }: { children: React.ReactNode }) {
 
@@ -10,6 +11,7 @@ export default function RootProviders({ children }: { children: React.ReactNode 
         {children}
       </ThemeProvider>
       <Analytics />
+      <Toaster richColors />
     </>
   )
 }
