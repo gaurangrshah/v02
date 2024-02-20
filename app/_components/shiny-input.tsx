@@ -6,12 +6,15 @@ import {
   useState,
 } from 'react';
 
+import { cn } from '@/lib/utils';
+
 export type ShinyInputProps = {
   field: ComponentProps<'input'>;
+  className: string;
   children: React.ReactNode;
 }
 
-export function ShinyInput({ field, children }: ShinyInputProps) {
+export function ShinyInput({ field, className, children }: ShinyInputProps) {
   const divRef = useRef<HTMLInputElement>(null);
   const [isFocused, setIsFocused] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -53,7 +56,7 @@ export function ShinyInput({ field, children }: ShinyInputProps) {
         onMouseLeave={handleMouseLeave}
         autoComplete="off"
         {...field}
-        className="ps-12 w-full border border-neutral-800 bg-background focus-visible:bg-neutral-950 text-slate-400 transition-colors duration-500 placeholder:select-none placeholder:text-slate-600 focus:border-[hsl(150_40%_52%)] focus:outline-none focus-visible:focus:ring-0 focus-visible:ring-0 focus-within:focus:ring-0 rounded-md" />
+        className={cn(className, "ps-12 w-full border border-neutral-800 bg-background focus-visible:bg-neutral-950 text-slate-400 transition-colors duration-500 placeholder:select-none placeholder:text-slate-600 focus:border-[hsl(150_40%_52%)] focus:outline-none focus-visible:focus:ring-0 focus-visible:ring-0 focus-within:focus:ring-0 rounded-md")} />
       <input
         ref={divRef}
         disabled
