@@ -105,6 +105,10 @@ export const subscribers = sqliteTable(
     createdAt: integer('created_at', { mode: 'timestamp' }).default(
       sql`CURRENT_TIMESTAMP`
     ),
+    // @TODO: add this to the next migration then update subscriber service
+    // updatedAt: integer('updated_at', { mode: 'timestamp' }).default(
+    //   sql`CURRENT_TIMESTAMP`
+    // ),
   },
   (table) => ({
     subscriberUserIdIdx: index('subscriber_user_id_idx').on(table.userId),
