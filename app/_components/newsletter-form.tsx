@@ -2,48 +2,45 @@
 
 import {
   type ComponentProps,
-  useState,
+  createRef,
+  useEffect,
 } from 'react';
 import {
   useFormState,
   useFormStatus,
 } from 'react-dom';
 
-import { z } from 'zod';
-
 import {
   Mail,
-  Send,
   X,
 } from 'lucide-react';
 
+import { Loading } from '@/components/loading';
 import { Button } from '@/components/ui/button';
+import {
+  Popover,
+  PopoverClose,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 
-import { sendEmail } from '@/lib/actions/resend';
-import { emailSchema } from '@/lib/email/utils';
+import { useFormStateResponse } from '@/hooks/use-form-state-response';
+
+import { sendVerificationEmail } from '@/lib/actions/send-verification-email';
 import { cn } from '@/lib/utils';
 
 import { ShinyInput } from './shiny-input';
 
-type FormInput = z.infer<typeof emailSchema>;
-type Errors = { [K in keyof FormInput]: string[] };
+export type Fields = ComponentProps<'input'>[]
 
-function SubmitButton() {
-  const { pending } = useFormStatus()
-  return (
-    <Button type="submit" disabled={pending} className="peer absolute top-[0.1rem] end-0.5  font-medium rounded-md bg-black/00 hover:bg-gray-800 scale-75 border-slate-700 border-2 text-slate-600 group-focus-within:text-slate-300" size="icon">
-      <Send className="text-current" />
-    </Button>
-  )
-}
-
-const fields: ComponentProps<'input'>[] = [
+const fields: Fields = [
   {
     type: "text",
-    placeholder: "Enter Your Name",
+    placeholder: "Name",
     name: "name",
     autoComplete: "off",
-    defaultValue: ""
+    defaultValue: "",
+    required: true
   },
   {
     type: "email",
@@ -55,43 +52,118 @@ const fields: ComponentProps<'input'>[] = [
   },
 ]
 
+function PopoverCloseButton({ ...props }: { [key: string]: any }) {
+  return (
+    <Button
+      size="icon"
+      className="bg-background scale-75 text-white/40 focus-visible:text-white/60 hover:bg-destructive/50 hover:text-white/60"
+      {...props}
+    >
+      <X />
+    </Button>
+  )
+}
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+  return (
+    <Button
+      type="submit"
+      size="sm"
+      disabled={pending}
+      aria-disabled={pending}
+      className={pending ? "bg-transparent pointer-events-none" : "pointer-events-auto bg-emerald-600/10 hover:bg-emerald-600/40 focus-visible:bg-emerald-600/20 focus-visible:ring-accent"}
+    >
+      {pending ? <Loading className="scale-90" /> : "Subscribe"}
+    </Button>
+  )
+}
+
+function FormMessage({ hasError, message }: { hasError: boolean, message: string }) {
+  return (
+    <div
+      className={cn(hasError ? "scale-y-100 visible opacity-100 my-4" : "scale-y-0 hidden opacity-0", "transition-all ease-in-out text-sm p-2 bg-gray-950/40 rounded-md text-gray-400 flex gap-4")}
+    >
+      {message}
+    </div>
+  )
+}
+
 export function NewsletterForm() {
-  const [state, formAction] = useFormState(sendEmail, null)
-  const [show, setShow] = useState(false)
-  const [currentStep, setCurrentStep] = useState(0)
+  const [state, sendVerificationEmailAction] = useFormState(sendVerificationEmail, null);
+  const { success, message, field } = useFormStateResponse(state);
+
+  const formRef = createRef<HTMLFormElement>();
+
+  useEffect(() => {
+    if (state?.success) {
+      console.log('resetting form')
+      formRef.current?.reset();
+    }
+  }, [state?.success, formRef]);
+
+  const translateX = `transition-transform translate-x-6 ease-out`
 
   return (
-    <div className='relative flex items-center space-y-2'>
-      <Button onClick={() => setShow(prev => !prev)} className={cn(show ? "absolute z-10 mt-2 bg-gray-800/70 border-none" : "z-0 relative", state?.data && "hidden", "scale-75 bg-transparent border-2 font-medium rounded-md hover:bg-gray-800 border-slate-700 text-slate-600 hover:text-slate-400 transition-colors")} size="icon">
-        {show ? <X className="text-current" /> : <Mail className="text-current" />}
-      </Button>
-      <div className={cn("relative text-xs font-base text-slate-300 rounded-md p-4 -ml-4 max-w-md group transition-transform duration-300 ease-in-out w-full pr-20", show ? "scale-x-100" : "scale-x-0")} role="group"
-        style={{ transformOrigin: "0% 0%" }}
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button
+          size="icon"
+          className="text-accent hover:border-2 hover:border-accent/80 hover:shadow-md focus-visible:text-accent/60 scale-90 hover:scale-105 transition-all duration-200"
+        >
+          <Mail />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent
+        side='bottom'
+        align="center"
+        alignOffset={10}
+        className={cn(translateX, "bg-muted/30 backdrop-blur-2xl border-emerald-900/60")}
       >
-        {state?.data ? (
-          <div className={cn('max-w-md relative bg-neutral-950/50 rounded-md px-3 py-4 scale-x-0', state?.data && "scale-x-100")}>
-            Form submitted thank you.
+        <div className="w-full mb-3 flex flex-col ">
+          <div className='flex justify-between'>
+            <p className="text-lg font-semibold pt-1 text-gray-300">The Tipline</p>
+            <PopoverClose asChild >
+              <PopoverCloseButton />
+            </PopoverClose>
           </div>
-        ) : (
-          <>
-            <p className={cn('peer transition-transform translate-y-6 absolute group-focus-within:-translate-y-5 delay-100 duration-400 ease-in-out ml-1', state?.message && "hidden")}>Sign up for updates, news, and free resources!</p>
-            <form action={formAction}>
-              {state?.message && (
-                <p className="text-xs bg-neutral-50 p-2">
-                  {String(JSON.stringify(state?.message))}
-                </p>
-              )}
-              {fields.map((field, i) => (
-                <ShinyInput field={field} key={i} className={cn(i === currentStep ? "visible scale-x-100" : "hidden scale-x-0")}>
-                  {currentStep === i && currentStep === fields.length - 1 ?
-                    <SubmitButton /> :
-                    <Button className={cn(i === currentStep ? "visible scale-x-100" : "hidden scale-x-0", "peer absolute top-[0.1rem] end-0.5  font-medium rounded-md bg-black/00 hover:bg-gray-800 scale-75 border-slate-700 border-2 text-slate-600 group-focus-within:text-slate-300")} size="icon" onClick={() => setCurrentStep(prev => prev + 1)}>{'>'}</Button>}
-                </ShinyInput>
-              ))}
-            </form >
-          </>
-        )}
-      </div>
-    </div>
+          <p className='text-xs text-gray-400/90'>For the latest tips, tools, and resources.</p>
+        </div>
+        <div className="relative">
+          <form
+            action={sendVerificationEmailAction}
+            className="flex flex-col gap-2"
+            ref={formRef}
+          >
+            {fields.map((field) => {
+              const hasError = !success && message && field === field.name;
+              return (
+                <div key={field.name} className="relative group">
+                  <ShinyInput
+                    className="text-left"
+                    key={field.name}
+                    field={field}
+                    label={{
+                      text: field.name,
+                      className: cn("", 'capitalize translate-y-1 text-xs text-accent delay-200 placeholder:text-xs not-sr-only')
+                    }} />
+                  <div
+                    className={cn(hasError ? "scale-y-100" : "scale-y-0", "transition-transform ease-in-out")}
+                  >
+                    {hasError ? message : null}
+                  </div>
+                </div>
+              )
+            })}
+
+            <div className={cn(!field && !!message ? "my-0" : "-my-2")}>
+              <FormMessage hasError={!field && !!message} message={message} />
+            </div>
+
+            <SubmitButton />
+          </form>
+        </div>
+      </PopoverContent>
+    </Popover>
   )
 }

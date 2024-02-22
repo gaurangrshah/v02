@@ -1,4 +1,3 @@
-import { NewsletterForm } from './newsletter-form';
 import { Socials } from './socials';
 
 const LINKS = [
@@ -15,9 +14,11 @@ export function Header() {
         <h1 className="text-4xl font-bold tracking-tight text-primary dark:text-slate-200 sm:text-5xl">
           <a href="/">Gaurang Shah</a>
         </h1>
-        <h2 className="mt-3 text-lg font-medium tracking-tight text-secondary sm:text-xl">
-          Full Stack Engineer
-        </h2>
+        <div className='flex items-center gap-3'>
+          <h2 className="mt-3 text-lg font-medium tracking-tight text-secondary sm:text-xl">
+            Full Stack Engineer
+          </h2>
+        </div>
         <p className="text-sm mt-4 max-w-xs leading-normal text-slate-400">
           I help startups and SMB&apos;s excel online by building engaging experiences that drive growth.
         </p>
@@ -37,7 +38,6 @@ export function Header() {
         </nav>
       </div>
       <div>
-        <NewsletterForm />
         <Socials />
       </div>
     </header>
