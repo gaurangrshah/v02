@@ -1,5 +1,7 @@
 import { ComponentProps } from 'react';
 
+import { NewsletterForm } from './newsletter-form';
+
 export type Social = {
   title: string;
   href: string;
@@ -87,7 +89,7 @@ export function Socials() {
   return (
     <ul className="ml-1 flex items-center gap-x-2" aria-label="Social media">
       {SOCIALS.map((social) => (
-        <li key={social.title} className="text-xs shrink-0 hover:-translate-y-3 transition-transform ease-cubic fill-mode-both rounded-md hover:shadow-md px-2 py-1">
+        <li key={social.title} className="text-xs text-accent shrink-0 hover:-translate-y-3 transition-transform ease-cubic fill-mode-both rounded-md hover:shadow-md px-2 py-1">
           <a
             className="block hover:text-slate-200"
             href={social.href}
@@ -110,6 +112,9 @@ export function Socials() {
           </a>
         </li>
       ))}
+      <li>
+        <div><NewsletterForm /></div>
+      </li>
     </ul>
   )
 }
