@@ -5,6 +5,8 @@
     ["^tailwind-merge", "^tailwind-animate", "^tailwindcss", "^next-themes"],
     ["^lucia", "^@lucia-auth/"],
     [
+
+      "^better-sqlite3",
       "^drizzle-zod",
       "^drizzle-orm",
       "^drizzle-kit",
@@ -25,5 +27,8 @@
     "^[.]",
     "^@/(lib|providers)/[^/]*type$",
     "^[^/]*type$"
+  ],
+  "cSpell.words": [
+    "datetime"
   ]
 }
