@@ -1,3 +1,4 @@
+
 export default function Loading() {
   return (
     <div className="min-w-full min-h-full grid place-items-center place-content-center animate-pulse text-muted-foreground p-4">
