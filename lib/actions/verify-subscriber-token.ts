@@ -70,6 +70,6 @@ export async function verifySubscriberToken({
     return { success: true, message: 'Email verified successfully!' };
   } catch (error) {
     console.error(error);
-    return { error: true, message: JSON.stringify(error, null, 2) };
+    return { error: true, message: (error as Error).message };
   }
 }
