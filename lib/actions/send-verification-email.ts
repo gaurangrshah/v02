@@ -1,11 +1,9 @@
 'use server';
 
-import { SqliteError } from 'better-sqlite3';
+import { LibsqlError } from '@libsql/client';
 
 import { insertSubscriber } from '../db/services/subscribers';
-import {
-  sendSubscriberVerificationEmail,
-} from '../email/services/send-subscriber-verification-email';
+import { sendSubscriberVerificationEmail } from '../email/services/send-subscriber-verification-email';
 import { emailSchema } from '../email/utils';
 import { validateSchema } from '../utils';
 
@@ -41,7 +39,7 @@ export async function sendVerificationEmail(
       message: 'Please check your inbox on instructions to verify your email.',
     };
   } catch (error) {
-    if (error instanceof SqliteError) {
+    if (error instanceof LibsqlError) {
       const uniqueConstraint =
         error.code === 'SQLITE_CONSTRAINT_UNIQUE'
           ? 'Email already subscribed'
