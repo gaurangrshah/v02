@@ -12,7 +12,7 @@
   "rootPath": "",
   "componentLib": "shadcn-ui",
   "driver": "sqlite",
-  "provider": "better-sqlite3",
+  "provider": "turso",
   "orm": "drizzle",
   "auth": "lucia"
 }
