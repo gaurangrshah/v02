@@ -54,6 +54,47 @@ export function generateRandomSecureToken(length = 32) {
   )();
 }
 
+export const sql24HoursAgo = `datetime('now', '-24 hours')`;
+
+export const timestamps: { createdAt: true; updatedAt: true } = {
+  createdAt: true,
+  updatedAt: true,
+};
+
+/**
+ * Generates a random token of the specified length.
+ *
+ * @param length The length of the token to generate.
+ * @returns The randomly generated token.
+ */
+export function generateRandomToken(length: number) {
+  let token = '';
+  // allowed characters in the token
+  const characters =
+    '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const charactersLength = characters.length;
+
+  for (let i = 0; i < length; i++) {
+    // generate a random character from the allowed characters
+    token += characters.charAt(Math.floor(Math.random() * charactersLength));
+
+    // add a '-' every 6 digits
+    if ((i + 1) % 6 === 0 && i !== length - 1) {
+      token += '-';
+    }
+  }
+
+  return token;
+}
+
+/**
+ * Returns the current date and time in the format "YYYY-MM-DD HH:mm:ss".
+ * @returns {string} The current date and time.
+ */
+export function datetimeNow() {
+  return new Date().toISOString().slice(0, 19).replace('T', ' ');
+}
+
 /**
  * @SEE: blog.stackademic.com/form-validation-with-zod-8e30c9fb464a
  * Handles a ZodError with a single level of issues.
