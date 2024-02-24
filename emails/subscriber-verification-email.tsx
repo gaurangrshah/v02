@@ -41,19 +41,19 @@ export default function SubscriberVerificationEmail({
           <Section>
             <Text style={text}>Hi {name},</Text>
             <Text style={text}>
-              Someone recently signed up to the G.Shah Dev mailing list. If this was you, you can click here:
+              You recently signed up to the G.Shah Dev mailing list. If this was you, you can click here to verify your email address and complete the subscription process:
             </Text>
             <Button style={button} href={tokenCallback}>
               Verify Email
             </Button>
-            <Text style={text}>
+            <Text style={textsm}>
               If you don&apos;t want to subscribe or didn&apos;t
               request this, just ignore and delete this message.
             </Text>
             <Text style={text}>
               For security reasons, we ask that you don&apos;t forward this email
               to anyone. See our Help Center for{" "}
-              <Link style={anchor} href="https://gshahdev.com/coming-soon">
+              <Link style={anchor} href="#">
                 more security information.
               </Link>
             </Text>
@@ -66,8 +66,8 @@ export default function SubscriberVerificationEmail({
 };
 
 SubscriberVerificationEmail.PreviewProps = {
-  name: "Alan",
-  tokenCallback: "https://gshahdev.com/verify?token=123&email=user%40gshahdev.com",
+  name: "Subscriber Name",
+  tokenCallback: "https://www.gshahdev.com/verify?token=123&email=user%40gshahdev.com",
 } as subscriberEmailProps;
 
 
@@ -85,6 +85,14 @@ const container = {
 
 const text = {
   fontSize: "16px",
+  fontFamily:
+    "'Open Sans', 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif",
+  fontWeight: "300",
+  color: "#404040",
+  lineHeight: "26px",
+};
+const textsm = {
+  fontSize: "13px",
   fontFamily:
     "'Open Sans', 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif",
   fontWeight: "300",
