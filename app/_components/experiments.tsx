@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 import { z } from 'zod';
 
-import GifPopover from '@/components/popover/gif-popover';
+import { PopoverViewer } from '@/components/popover/popover-viewer';
 import {
   Popover,
   PopoverContent,
@@ -30,7 +30,7 @@ const EXPERIMENTS: Experiment[] = [
       'A freelance project management Saas platform for design and marketing agencies. Features a custom CMS, CRM, and hosting services.',
     image: 'https://camo.githubusercontent.com/289ba48b3b93dacd92c289d05cfe3ef0238934f99a90680fb1f81ad60a757bfd/68747470733a2f2f73746f726167652e676f6f676c65617069732e636f6d2f6d7367736e64722f307774535865786c50684d4e313934356f6f78572f6d656469612f3635623763336432343636303437376461663364363730382e706e67',
     link: null,
-    technologies: ['Next.js', 'TailwindCSS', 'Prisma', 'PlanetScale', 'Live-Kit', 'Heroku'],
+    technologies: ['Next.js', 'TailwindCSS', 'Prisma', 'PlanetScale', 'PlanetScale', 'Vercel', 'Stripe', 'Zod', 'Typescript'],
     stars: null
   },
   {
@@ -39,15 +39,23 @@ const EXPERIMENTS: Experiment[] = [
       'A proof of concept (currently under "alpha" preview), inspired by Coolors.co. This project focuses on accessibility, and future integrations with design tools like Figma are on the roadmap',
     image: '/swatchr.gif',
     link: 'https://swatchr.app',
-    technologies: ['Next.js', 'TailwindCSS', 'Prisma', 'PlanetScale', 'Live-Kit', 'Heroku'],
+    technologies: ['Next.js', 'Chakra-UI', 'Framer Motion', 'Supabase', 'Tinycolor2', 'Chroma.js', 'zod', 'Vercel'],
     stars: null
   },
+  // {
+  //   title: 'Imaginer',
+  //   description:
+  //     'A quick and easy image restoration tool Powered by Cloudinary. Retouch, recolor, restore and use AI to enhance your images.',
+  //   image: '/.gif',
+  //   link: '',
+  //   technologies: ['Next.js', 'Tailwind', 'MongoDB', 'Mongoose', 'Svix', 'Cloudinary', 'Vercel']
+  // },
   {
     title: 'Miro Clone',
     description: 'A working clone of the popular whiteboard app Miro. Demonstrating  modern real-time collaborative serverless application architecture.',
     image: '/mira.gif',
     link: 'https://mira-one-green.vercel.app/',
-    technologies: ['Next.js', 'TailwindCSS', 'Convex', 'Live-Kit', 'Vercel']
+    technologies: ['Next.js', 'TailwindCSS', 'Convex', 'Clerk', 'Live-Kit', 'Zustand', 'Vercel']
   },
   {
     title: 'Discord Clone',
@@ -82,7 +90,7 @@ export function Experiments() {
       <ScrollArea className="h-[30rem] w-full rounded-md px-3 pt-4">
         <ul className="group/list pr-2">
           {EXPERIMENTS.map((experiment, i) => (
-            <GifPopover image={{ src: experiment.image, alt: experiment.title }} key={i}>
+            <PopoverViewer title={experiment.title} description={experiment.description} tags={experiment.technologies} image={{ src: experiment.image, alt: experiment.title }} key={i}>
               <li key={i} className="mb-12">
                 <div className="group relative grid gap-4 pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50 md:px-2">
                   <div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-emerald-800/10 dark:lg:group-hover:bg-emerald-800/20 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg" />
@@ -174,7 +182,7 @@ export function Experiments() {
                   />
                 </div>
               </li>
-            </GifPopover>
+            </PopoverViewer>
           ))}
         </ul>
       </ScrollArea>

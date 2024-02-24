@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 import { z } from 'zod';
 
-import GifPopover from '@/components/popover/gif-popover';
+import { PopoverViewer } from '@/components/popover/popover-viewer';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
 import { truncate } from '@/lib/utils';
@@ -120,7 +120,7 @@ export async function Blog() {
         <ScrollArea className="h-[30rem] w-full rounded-md px-3 pt-4">
           <ul className="group/list">
             {articles?.length ? articles.map((article: { title: string; thumbnail: string; link: string; pubDate: string; description: string; }, i: number) => (
-              <GifPopover image={{ src: getThumbnails(article), alt: article.title }} key={i}>
+              <PopoverViewer title={article.title} description={article.description} tags={[]} image={{ src: getThumbnails(article), alt: article.title }} key={i}>
                 <li key={i} className="mb-12">
                   <div className="group relative grid grid-cols-8 gap-4 transition-all sm:items-center sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50 px-3">
                     <div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-emerald-800/10 dark:lg:group-hover:bg-emerald-800/20 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg" />
@@ -172,7 +172,7 @@ export async function Blog() {
                     </div>
                   </div>
                 </li>
-              </GifPopover>
+              </PopoverViewer>
             )) : null}
             {/* <p className="-mt-1 text-xs text-slate-400 leading-6">{article.date}</p> */}
             {/* <p className="-mt-1 text-xs text-slate-400 leading-6">{article.pubDate}</p> */}
