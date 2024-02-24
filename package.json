@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "db:sync": "drizzle-kit generate:sqlite drizzle-kit push:sqlite",
+    "db:sync": "drizzle-kit generate:sqlite & drizzle-kit push:sqlite",
     "db:seed": "pnpm dlx tsx lib/db/seed.ts",
     "db:generate": "drizzle-kit generate:sqlite",
     "db:migrate": "tsx lib/db/migrate.ts",
