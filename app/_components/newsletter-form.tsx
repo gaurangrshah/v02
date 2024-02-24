@@ -109,7 +109,8 @@ export function NewsletterForm() {
       <PopoverTrigger asChild>
         <Button
           size="icon"
-          className="text-accent hover:border-2 hover:border-accent/80 hover:shadow-md focus-visible:text-accent/60 scale-90 hover:scale-105 transition-all duration-200"
+          variant="outline"
+          className="text-accent hover:border-2 hover:border-accent/80 hover:shadow-md focus-visible:text-accent/90 scale-90 hover:scale-105 transition-all duration-200"
         >
           <Mail />
         </Button>

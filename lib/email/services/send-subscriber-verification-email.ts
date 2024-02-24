@@ -12,15 +12,16 @@ export async function sendSubscriberVerificationEmail({
   email: string;
   token: string;
 }) {
+  const tokenCallback =
+    process.env.NODE_ENV === 'development'
+      ? `${process.env.NEXT_PUBLIC_BASE_URL}/verify/${token}/${email}`
+      : `${`https://gshahdev.com`}/verify/${token}/${email}`;
   try {
     const data = await resend.emails.send({
       to: [email],
       react: SubscriberVerificationEmail({
         name: name,
-        tokenCallback:
-          process.env.NODE_ENV === 'development'
-            ? `${process.env.NEXT_PUBLIC_BASE_URL}/verify/${token}/${email}`
-            : `${`https://www.gshahdev.com`}/verify/${token}/${email}`,
+        tokenCallback,
       }),
       ...emailConfig,
     });
