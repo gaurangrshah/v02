@@ -145,3 +145,8 @@
     text-wrap: pretty;
   }
 }
+
+.PopoverContent {
+  --radix-popover-trigger-width: 200px;
+  --radix-popover-trigger-available-height: 80px;
+}
