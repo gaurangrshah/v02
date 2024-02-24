@@ -130,6 +130,7 @@ export async function Blog() {
                       width={200}
                       height={48}
                       decoding="async"
+                      // placeholder={dataUrl as PlaceholderValue}
                       data-img={1}
                       className="z-10 col-span-2 rounded border-2 border-slate-200/10 transition group-hover:border-slate-200/30 sm:col-span-2"
                       style={{ color: "transparent" }}
