@@ -20,7 +20,7 @@ export async function sendSubscriberVerificationEmail({
         tokenCallback:
           process.env.NODE_ENV === 'development'
             ? `${process.env.NEXT_PUBLIC_BASE_URL}/verify/${token}/${email}`
-            : `${`https://gshahdev.com`}/verify/${token}/${email}`,
+            : `${`https://www.gshahdev.com`}/verify/${token}/${email}`,
       }),
       ...emailConfig,
     });
