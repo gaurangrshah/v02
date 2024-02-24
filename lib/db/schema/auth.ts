@@ -23,7 +23,7 @@ export const sessions = sqliteTable(
     id: text('id').primaryKey(),
     userId: text('user_id')
       .notNull()
-      .references(() => users.id, { onUpdate: 'cascade', onDelete: 'cascade' }),
+      .references(() => users.id),
     activeExpires: blob('active_expires', {
       mode: 'bigint',
     }).notNull(),
@@ -44,52 +44,50 @@ export const keys = sqliteTable(
     id: text('id').primaryKey(),
     userId: text('user_id')
       .notNull()
-      .references(() => users.id, { onUpdate: 'cascade', onDelete: 'cascade' }),
+      .references(() => users.id),
     hashedPassword: text('hashed_password'),
-    createdAt: integer('created_at', { mode: 'timestamp' }),
-    updatedAt: integer('updated_at', { mode: 'timestamp' }),
   },
   (table) => ({
     sessionUserIdIdx: index('user_key_user_id_idx').on(table.userId),
   })
 );
 
-export const tokens = sqliteTable(
-  'user_token',
-  {
-    id: text('id').primaryKey(),
-    userId: text('user_id')
-      .notNull()
-      .references(() => users.id, { onUpdate: 'cascade', onDelete: 'cascade' }),
-    issuedAt: blob('issued_at', {
-      mode: 'bigint',
-    }).notNull(),
-    expiresAt: blob('expires_at', {
-      mode: 'bigint',
-    }).notNull(),
-    createdAt: integer('created_at', { mode: 'timestamp' }),
-    updatedAt: integer('updated_at', { mode: 'timestamp' }),
-  },
-  (table) => ({
-    tokenUserIdIdx: index('token_user_id_idx').on(table.userId),
-  })
-);
+// export const tokens = sqliteTable(
+//   'user_token',
+//   {
+//     id: text('id').primaryKey(),
+//     userId: text('user_id')
+//       .notNull()
+//       .references(() => users.id, { onUpdate: 'cascade', onDelete: 'cascade' }),
+//     issuedAt: blob('issued_at', {
+//       mode: 'bigint',
+//     }).notNull(),
+//     expiresAt: blob('expires_at', {
+//       mode: 'bigint',
+//     }).notNull(),
+//     createdAt: integer('created_at', { mode: 'timestamp' }),
+//     updatedAt: integer('updated_at', { mode: 'timestamp' }),
+//   },
+//   (table) => ({
+//     tokenUserIdIdx: index('token_user_id_idx').on(table.userId),
+//   })
+// );
 
-export const roles = sqliteTable(
-  'user_role',
-  {
-    id: text('id').primaryKey(),
-    userId: text('user_id')
-      .notNull()
-      .references(() => users.id, { onUpdate: 'cascade', onDelete: 'cascade' }),
-    role: text('role').notNull(),
-    createdAt: integer('created_at', { mode: 'timestamp' }),
-    updatedAt: integer('updated_at', { mode: 'timestamp' }),
-  },
-  (table) => ({
-    roleUserIdIdx: index('role_user_id_idx').on(table.userId),
-  })
-);
+// export const roles = sqliteTable(
+//   'user_role',
+//   {
+//     id: text('id').primaryKey(),
+//     userId: text('user_id')
+//       .notNull()
+//       .references(() => users.id, { onUpdate: 'cascade', onDelete: 'cascade' }),
+//     role: text('role').notNull(),
+//     createdAt: integer('created_at', { mode: 'timestamp' }),
+//     updatedAt: integer('updated_at', { mode: 'timestamp' }),
+//   },
+//   (table) => ({
+//     roleUserIdIdx: index('role_user_id_idx').on(table.userId),
+//   })
+// );
 
 export const subscribers = sqliteTable(
   'user_subscriber',
