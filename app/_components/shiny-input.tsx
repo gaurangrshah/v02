@@ -60,7 +60,7 @@ export function ShinyInput({ field, className, label, children }: ShinyInputProp
         onMouseLeave={handleMouseLeave}
         autoComplete="off"
         {...field}
-        className={cn(className, " peer-focus-within:-translate-y-4 peer w-full border border-neutral-800 bg-background focus-visible:bg-neutral-950 text-slate-400 transition-all duration-500 placeholder:select-none placeholder:text-slate-600 focus:border-[hsl(150_40%_52%)] focus:outline-none focus-visible:focus:ring-0 focus-visible:ring-0 focus-within:focus:ring-0 rounded-md")} />
+        className={cn(className, " peer-focus-within:-translate-y-4 peer w-full min-h-10 ps-4  border border-neutral-800 bg-background focus-visible:bg-neutral-950 text-slate-400 transition-all duration-500 placeholder:select-none placeholder:text-slate-600 focus:border-[hsl(150_40%_52%)] focus:outline-none focus-visible:focus:ring-0 focus-visible:ring-0 focus-within:focus:ring-0 rounded-md")} />
       <input
         ref={divRef}
         disabled

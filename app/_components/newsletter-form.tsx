@@ -102,7 +102,7 @@ export function NewsletterForm() {
     }
   }, [state?.success, formRef]);
 
-  const translateX = `transition-transform translate-x-6 ease-out`
+  // const translateX = `transition-trandsform -translate-y-12 ease-out`
 
   return (
     <Popover>
@@ -115,14 +115,14 @@ export function NewsletterForm() {
         </Button>
       </PopoverTrigger>
       <PopoverContent
-        side='bottom'
+        side='top'
         align="center"
         alignOffset={10}
-        className={cn(translateX, "bg-muted/30 backdrop-blur-2xl border-emerald-900/60")}
+        className={cn("bg-muted/30 backdrop-blur-2xl border-emerald-900/60")}
       >
         <div className="w-full mb-3 flex flex-col ">
           <div className='flex justify-between'>
-            <p className="text-lg font-semibold pt-1 text-gray-300">The Tipline</p>
+            <p className="text-lg font-semibold pt-1 text-gray-300/90">The Tipline</p>
             <PopoverClose asChild >
               <PopoverCloseButton />
             </PopoverClose>

@@ -113,7 +113,7 @@ export function Socials() {
         </li>
       ))}
       <li>
-        <div><NewsletterForm /></div>
+        <NewsletterForm />
       </li>
     </ul>
   )
