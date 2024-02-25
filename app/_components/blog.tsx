@@ -7,7 +7,7 @@ import { z } from 'zod';
 import { PopoverViewer } from '@/components/popover/popover-viewer';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
-import { truncate } from '@/lib/utils';
+import { cn, truncate } from '@/lib/utils';
 
 import { SectionTitle } from './section-title';
 
@@ -82,7 +82,6 @@ const articlesSchema = z.object({ title: z.string(), thumbnail: z.string(), link
 type Article = z.infer<typeof articlesSchema>;
 
 export async function Blog() {
-
   const response = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://blog.gshahdev.com/rss.xml')
   const data = await response.json()
   const articles = data.items.map((item: Article) => {
@@ -130,9 +129,11 @@ export async function Blog() {
                       width={200}
                       height={48}
                       decoding="async"
-                      // placeholder={dataUrl as PlaceholderValue}
                       data-img={1}
-                      className="z-10 col-span-2 rounded border-2 border-slate-200/10 transition group-hover:border-slate-200/30 sm:col-span-2"
+                      className={cn(
+
+                        "z-10 col-span-2 rounded border-2 border-slate-200/10 transition group-hover:border-slate-200/30 sm:col-span-2 duration-700 ease-in-out",
+                      )}
                       style={{ color: "transparent" }}
                       src={getThumbnails(article)}
                     />

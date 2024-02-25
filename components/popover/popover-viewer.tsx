@@ -2,11 +2,9 @@
 
 import { useState } from 'react';
 
-import Image from 'next/image';
-
 import { truncate } from '@/lib/utils';
 
-import { AspectRatio } from '../ui/aspect-ratio';
+import { BlurImage } from '../blur-image';
 import {
   Popover,
   PopoverContent,
@@ -41,15 +39,7 @@ export function PopoverViewer({ title, description, tags, image, children }: Pop
       </PopoverTrigger>
       <PopoverContent side="top" sideOffset={0} className="bg-white/20 backdrop-blur-lg">
         <h3 className="pb-3 font-semibold">{truncate(title, 25)}</h3>
-        <AspectRatio ratio={16 / 9} className='w-full h-full'>
-          <Image
-            src={image.src}
-            alt={image.alt ?? "gif"}
-            loading="lazy"
-            fill
-          // placeholder={dataUrl as PlaceholderValue}
-          />
-        </AspectRatio>
+        <BlurImage src={image.src} alt={image.alt} />
         {!!tags.length ? (
           <div className="flex flex-wrap gap-2 mt-3">
             {tags.map((tag, i) => (
