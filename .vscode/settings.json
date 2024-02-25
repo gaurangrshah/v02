@@ -1,33 +1,33 @@
 {
-  "tsImportSorter.configuration.groupRules": [
-    "^react(-dom)?$",
-    ["^next", "^next/", "^@vercel/"],
-    ["^tailwind-merge", "^tailwind-animate", "^tailwindcss", "^next-themes"],
-    ["^lucia", "^@lucia-auth/"],
-    [
-
-      "^libsql",
-      "^drizzle-zod",
-      "^drizzle-orm",
-      "^drizzle-kit",
-      "^zod",
-      "^nanoid",
-      "^date-fns/"
-    ],
-    "^resend",
-    "^lucide-react",
-    ["^cmdk", "^sonner"],
-    ["^stripe", "^@stripe/"],
-    {},
-    "^@/providers/",
-    ["^@/components/", "^@/components/ui/"],
-    "^@/hooks/",
-    "^[@/]",
-    "^",
-    "^[.]",
-    "^@/(lib|providers)/[^/]*type$",
-    "^[^/]*type$"
-  ],
+  // "tsImportSorter.configuration.groupRules": [
+  //   // "^use (client|server)$", // Allow "use client" and "use server" at the top
+  //   "^react(-dom)?$",
+  //   ["^next", "^next/", "^@vercel/"],
+  //   ["^tailwind-merge", "^tailwind-animate", "^tailwindcss", "^next-themes"],
+  //   ["^lucia", "^@lucia-auth/"],
+  //   [
+  //     "^libsql",
+  //     "^drizzle-zod",
+  //     "^drizzle-orm",
+  //     "^drizzle-kit",
+  //     "^zod",
+  //     "^nanoid",
+  //     "^date-fns/"
+  //   ],
+  //   "^resend",
+  //   "^lucide-react",
+  //   ["^cmdk", "^sonner"],
+  //   ["^stripe", "^@stripe/"],
+  //   {},
+  //   "^@/providers/",
+  //   ["^@/components/", "^@/components/ui/"],
+  //   "^@/hooks/",
+  //   "^[@/]",
+  //   "^",
+  //   "^[.]",
+  //   "^@/(lib|providers)/[^/]*type$",
+  //   "^[^/]*type$"
+  // ],
   "cSpell.words": [
     "datetime"
   ],
