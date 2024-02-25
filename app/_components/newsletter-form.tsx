@@ -56,7 +56,7 @@ function PopoverCloseButton({ ...props }: { [key: string]: any }) {
   return (
     <Button
       size="icon"
-      className="bg-background scale-75 text-white/40 focus-visible:text-white/60 hover:bg-destructive/50 hover:text-white/60"
+      className="bg-background scale-75 text-foreground/40 focus-visible:text-white/60 hover:bg-destructive/60 hover:text-white/60 hover:shadow-md"
       {...props}
     >
       <X />
@@ -123,12 +123,12 @@ export function NewsletterForm() {
       >
         <div className="w-full mb-3 flex flex-col ">
           <div className='flex justify-between'>
-            <p className="text-lg font-semibold pt-1 text-gray-300/90">The Tipline</p>
+            <p className="text-lg font-semibold pt-1 text-foreground/80">The Tipline</p>
             <PopoverClose asChild >
               <PopoverCloseButton />
             </PopoverClose>
           </div>
-          <p className='text-xs text-gray-400/90'>For the latest tips, tools, and resources.</p>
+          <p className='text-xs text-foreground'>For the latest tips, tools, and resources.</p>
         </div>
         <div className="relative">
           <form
