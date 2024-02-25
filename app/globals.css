@@ -134,6 +134,9 @@
       animation-timeline: scroll(root block);
     }
   }
+  .animate-fade-in {
+    @apply animate-in fade-in;
+  }
 }
 
 @utilities {
