@@ -3,48 +3,43 @@
 import Analytics from 'analytics';
 import { AnalyticsProvider } from 'use-analytics';
 import { usePathname, useSearchParams } from 'next/navigation';
-import React, { useEffect, type PropsWithChildren } from 'react';
+import React, { useEffect, type PropsWithChildren, Suspense } from 'react';
 import { doNotTrackEnabled } from 'analytics-plugin-do-not-track'
 import googleTagManager from '@analytics/google-tag-manager'
 import googleAnalytics from '@analytics/google-analytics'
+import { env } from '@/lib/env.mjs';
+import { getCookie, setCookie } from 'cookies-next';
 
 const doNotTrack = doNotTrackEnabled();
 // Only enable analytics in production and if doNotTrack is NOT enabled
-const enabled = process.env.NODE_ENV === 'production' && !doNotTrack;
+const consent = getCookie('app-consent') === 'true' ? true : false;
+const enabled = process.env.NODE_ENV === 'production' && !!consent && !doNotTrack;
 
 export const analytics = Analytics({
   app: 'gshahdev-v2',
   debug: true,
   plugins: [
     googleTagManager({
-      containerId: "GTM-T548B3LB",
+      containerId: env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID,
       enabled: true,
     }),
-    googleAnalytics({
-      measurementIds: ['G-7BRVNV68JY'],
-      enabled: true,
-    })
+    // googleAnalytics({
+    //   measurementIds: [env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID],
+    //   enabled: true,
+    // })
   ],
 });
 
 
-export function getConsent() {
-  if (typeof window !== 'undefined') {
-    // Check if consent is already given
-    const consent = localStorage.getItem('app-consent');
-    if (consent === null) {
-      // If consent is not given, default to false
-      localStorage.setItem('app-consent', 'false');
-      return true;
-    }
-    // default to false (not tracking)
-    return false;
-  }
-}
-
 export default function AnalyticsComponent({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
+
+  useEffect(() => {
+    analytics.identify('gshahdev')
+
+
+  }, [])
 
   useEffect(() => {
     analytics.page();
