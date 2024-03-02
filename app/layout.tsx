@@ -2,10 +2,11 @@ import './globals.css';
 
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { GeistSans } from "geist/font/sans";
 
 import RootProviders from './root-providers';
 
-const inter = Inter({ subsets: ["latin"] });
+// const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://gshahdev.com/'),
@@ -35,7 +36,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className} suppressHydrationWarning>
+      <body className={GeistSans.className} suppressHydrationWarning>
         <RootProviders>
           {children}
         </RootProviders>
