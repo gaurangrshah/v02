@@ -2,21 +2,26 @@
 
 import CookieConsent from "react-cookie-consent";
 import { Button } from '../ui/button';
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { CookieSettings } from './cookie-settings';
 import { adCookies } from './constants';
-import { setCookies } from "./utils";
+import { consentUpdateEvent, setCookies } from "./utils";
 
 
 // @SEE: https://blog.stackademic.com/understanding-website-cookies-and-implementing-cookie-consent-in-next-js-project-136311f6c1e0
 export const CookieConsentBanner = () => {
 
-  const handleAccept = () => {
-    setCookies(adCookies)
-  };
+  const [accepted, setAccepted] = useState<'granted' | 'declined' | 'unset'>('unset')
 
-  const handleDecline = () => { };
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (accepted === 'unset') return
+    const isAccepted = accepted === 'granted' ? true : false
+    setCookies(adCookies, isAccepted)
+    consentUpdateEvent(adCookies.reduce((acc, key) => ({ ...acc, [key]: isAccepted }), {}), true)
+  }, [accepted])
+
   return (
     <CookieConsent
       location="bottom"
@@ -39,10 +44,8 @@ export const CookieConsentBanner = () => {
       cookieName="app-consent"
       cookieValue={'true'}
       expires={60 * 60 * 24 * 7}// Set expiration (1 week)
-      onAccept={handleAccept}
-      onDecline={() => {
-        handleDecline();
-      }}
+      onAccept={() => setAccepted('granted')}
+      onDecline={() => setAccepted('declined')}
     >
       <div className='flex items-center justify-between'>
         <p className="text-gray-800">This website uses cookies to enhance your experience.</p>

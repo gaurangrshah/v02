@@ -42,19 +42,19 @@ export default function AnalyticsComponent({ children }: { children: React.React
     if (typeof window !== 'undefined') {
       analytics.identify(GTM_APP_NAME)
 
-      setCookies([...defaultCookies, ...adCookies]); // set "necessary" cookies by default
+      setCookies([...defaultCookies]); // initialize default consents
 
       const gtag = gtagFn('dataLayer', 'google_tag_manager');
       if (typeof gtag === 'function') {
         gtag?.('set', redactionCookie, true); // set redaction cookie by default
         gtag?.('consent', 'default', {
-          ...getCookies([...defaultCookies, ...adCookies])
+          ...getCookies([...defaultCookies]) // initialize default consents
         });
       }
 
       analytics.track('consent', {
         consent: 'default',
-        ...getCookies([...defaultCookies, ...adCookies])
+        ...getCookies([...defaultCookies])
       })
     }
   }, []);
