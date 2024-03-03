@@ -155,6 +155,7 @@ function CookieOption({
   }, [options])
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
     setAllActive(Object.values(options).every(Boolean))
     consentUpdateEvent(options, true)
   }, [options])

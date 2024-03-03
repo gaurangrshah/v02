@@ -84,10 +84,10 @@ export function getConsent(condition: boolean) {
  * @export
  * @param {string[]} cookieList
  */
-export function setCookies(cookieList: string[]) {
+export function setCookies(cookieList: string[], denied?: boolean) {
   if (typeof window !== 'undefined' && cookieList?.length) {
     cookieList.forEach((cookie) => {
-      setCookie(cookie, 1, { maxAge: cookieExpiry });
+      setCookie(cookie, !denied ? 1 : 0, { maxAge: cookieExpiry });
     });
   } else {
     console.warn('No cookies to set');
