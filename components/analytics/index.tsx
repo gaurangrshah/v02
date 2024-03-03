@@ -9,7 +9,7 @@ import googleTagManager from '@analytics/google-tag-manager'
 import { env } from '@/lib/env.mjs';
 import { getCookie } from 'cookies-next';
 import { gtagFn, setCookies, getCookies } from './utils';
-import { GTM_APP_NAME, adCookies, defaultCookies, redactionCookie } from './constants';
+import { GTM_APP_NAME, defaultCookies, redactionCookie } from './constants';
 
 
 
@@ -24,6 +24,7 @@ export const analytics = Analytics({
     googleTagManager({
       containerId: env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID,
       enabled: true ?? enabled,
+
     }),
   ],
 
