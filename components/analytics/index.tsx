@@ -3,31 +3,30 @@
 import Analytics from 'analytics';
 import { AnalyticsProvider } from 'use-analytics';
 import { usePathname, useSearchParams } from 'next/navigation';
-import React, { useEffect, type PropsWithChildren, Suspense } from 'react';
+import { useEffect } from 'react';
 import { doNotTrackEnabled } from 'analytics-plugin-do-not-track'
 import googleTagManager from '@analytics/google-tag-manager'
-import googleAnalytics from '@analytics/google-analytics'
 import { env } from '@/lib/env.mjs';
-import { getCookie, setCookie } from 'cookies-next';
+import { getCookie } from 'cookies-next';
+import { gtagFn, setCookies, getCookies } from './utils';
+import { GTM_APP_NAME, adCookies, defaultCookies, redactionCookie } from './constants';
+
+
 
 const doNotTrack = doNotTrackEnabled();
-// Only enable analytics in production and if doNotTrack is NOT enabled
-const consent = getCookie('app-consent') === 'true' ? true : false;
-const enabled = process.env.NODE_ENV === 'production' && !!consent && !doNotTrack;
+const consent = !!getCookie('app-consent');
+const enabled = !!consent && !doNotTrack;
 
 export const analytics = Analytics({
-  app: 'gshahdev-v2',
+  app: GTM_APP_NAME,
   debug: true,
   plugins: [
     googleTagManager({
       containerId: env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID,
-      enabled: true,
+      enabled: true ?? enabled,
     }),
-    // googleAnalytics({
-    //   measurementIds: [env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID],
-    //   enabled: true,
-    // })
   ],
+
 });
 
 
@@ -36,14 +35,29 @@ export default function AnalyticsComponent({ children }: { children: React.React
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    analytics.identify('gshahdev')
-
-
-  }, [])
-
-  useEffect(() => {
     analytics.page();
   }, [pathname, searchParams])
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      analytics.identify(GTM_APP_NAME)
+
+      setCookies([...defaultCookies, ...adCookies]); // set "necessary" cookies by default
+
+      const gtag = gtagFn('dataLayer', 'google_tag_manager');
+      if (typeof gtag === 'function') {
+        gtag?.('set', redactionCookie, true); // set redaction cookie by default
+        gtag?.('consent', 'default', {
+          ...getCookies([...defaultCookies, ...adCookies])
+        });
+      }
+
+      analytics.track('consent', {
+        consent: 'default',
+        ...getCookies([...defaultCookies, ...adCookies])
+      })
+    }
+  }, []);
 
   return (
     <AnalyticsProvider instance={analytics}>
