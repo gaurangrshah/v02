@@ -21,7 +21,9 @@ export function BlurImage({ src, alt }: BlurImageProps) {
           src={src}
           alt={alt}
           fill
-          objectFit="cover"
+          quality={85}
+          sizes="(max-width: 300px) 100vw, 33vw"
+          className='object-cover'
           loading="lazy"
           placeholder={dataUrl as PlaceholderValue}
         />

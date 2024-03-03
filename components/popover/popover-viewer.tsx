@@ -33,7 +33,7 @@ export function PopoverViewer({ title, description, tags, image, children }: Pop
         asChild
         onMouseEnter={toggleOpen}
         onMouseLeave={toggleOpen}
-        className='p-9'
+        className=''
       >
         {children}
       </PopoverTrigger>
