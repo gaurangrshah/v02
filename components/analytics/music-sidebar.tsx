@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/button';
 export function MusicSidebar() {
   return (
     <Sheet>
-      <SheetTrigger>
+      <SheetTrigger asChild>
         <Button variant="link" className="text-md px-0 py-0 my-0 m-0 text-emerald-400">
           Music
         </Button>
