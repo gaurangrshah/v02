@@ -48,7 +48,7 @@ export const CookieConsentBanner = () => {
       onDecline={() => setAccepted('declined')}
     >
       <div className='flex items-center justify-between'>
-        <p className="text-gray-800">This website uses cookies to enhance your experience.</p>
+        <p className="text-gray-800 dark:text-white">This website uses cookies to enhance your experience.</p>
         <CookieSettings />
       </div>
     </CookieConsent >
