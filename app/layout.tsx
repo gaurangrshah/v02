@@ -5,8 +5,6 @@ import { GeistSans } from 'geist/font/sans';
 
 import RootProviders from './root-providers';
 
-// const inter = Inter({ subsets: ["latin"] });
-
 export const metadata: Metadata = {
   metadataBase: new URL('https://gshahdev.com/'),
   title: {
