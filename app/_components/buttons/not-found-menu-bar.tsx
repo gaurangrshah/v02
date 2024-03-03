@@ -7,7 +7,7 @@ import { Menubar } from './menu-bar';
 export default function NotFoundMenuBar() {
   const router = useRouter();
   return (
-    <div className='absolute bottom-8 w-full flex justify-center z-50'>
+    <div className='absolute bottom-24 w-full flex justify-center z-50'>
       <Menubar items={[{
         label: 'Back',
         onClick: router.back

@@ -13,7 +13,7 @@ export default function NotFound() {
           src="/404_astro_gs.png"
           alt='404 Not Found'
           fill
-          objectFit='cover'
+          className='object-cover'
           loading="eager"
         />
         <div className='absolute top-48 w-96 h-36 bg-background/60 z-20 rounded-md shadow-lg backdrop-blur-lg px-6 flex justify-center items-center'>
