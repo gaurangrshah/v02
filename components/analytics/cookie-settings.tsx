@@ -27,7 +27,7 @@ export function CookieSettings() {
     <Drawer shouldScaleBackground>
       <DrawerTrigger asChild>
         <Button variant="link" size="sm">
-          <p className="text-gray-800 text-sm">Manage cookie settings.</p>
+          <p className="text-foreground text-sm">Manage cookie settings.</p>
         </Button>
       </DrawerTrigger>
       <DrawerContent className="container max-w-4xl pb-24 bg-opacity-30">
