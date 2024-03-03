@@ -5,6 +5,7 @@ import { Toaster } from '@/components/ui/sonner';
 import AnalyticsComponent from '@/components/analytics';
 import { Suspense } from 'react';
 import { CookieConsentBanner } from '@/components/analytics/cookie-consent';
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export default function RootProviders({ children }: { children: React.ReactNode }) {
 
@@ -20,6 +21,7 @@ export default function RootProviders({ children }: { children: React.ReactNode 
       <Analytics />
       <CookieConsentBanner />
       <Toaster richColors />
+      <SpeedInsights />
     </>
   )
 }
