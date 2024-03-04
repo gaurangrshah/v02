@@ -14,3 +14,5 @@ export const adCookies = [
 export const redactionCookie = 'ads_data_redaction';
 
 export const cookieExpiry = 60 * 60 * 24 * 7; // Set expiration (1 week)
+
+export const COOKIE_CONSENT_KEY = 'app_consent';

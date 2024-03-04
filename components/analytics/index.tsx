@@ -1,68 +1,99 @@
-"use client";
+'use client';
 
 import Analytics from 'analytics';
 import { AnalyticsProvider } from 'use-analytics';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
-import { doNotTrackEnabled } from 'analytics-plugin-do-not-track'
-import googleTagManager from '@analytics/google-tag-manager'
+import { useEffect, useState } from 'react';
+import { doNotTrackEnabled } from 'analytics-plugin-do-not-track';
+import googleTagManager from '@analytics/google-tag-manager';
 import { env } from '@/lib/env.mjs';
-import { getCookie } from 'cookies-next';
-import { gtagFn, setCookies, getCookies } from './utils';
-import { GTM_APP_NAME, defaultCookies, redactionCookie } from './constants';
+import { getCookie, hasCookie, setCookie } from 'cookies-next';
+import { gtagFn, setCookies, getCookies, setInitialCookies } from './utils';
+import {
+  COOKIE_CONSENT_KEY,
+  GTM_APP_NAME,
+  adCookies,
+  cookieExpiry,
+  defaultCookies,
+  redactionCookie,
+} from './constants';
+import { ConsentBanner } from '@/components/consent-banner';
+import { AnimatedLoader } from '../animated-loader';
+import { Analytics as VercelAnalytics } from '@vercel/analytics/react';
 
-
-
-const doNotTrack = doNotTrackEnabled();
-const consent = !!getCookie('app-consent');
-const enabled = !!consent && !doNotTrack;
-
-export const analytics = Analytics({
-  app: GTM_APP_NAME,
-  debug: true,
-  plugins: [
-    googleTagManager({
-      containerId: env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID,
-      enabled: true ?? enabled,
-
-    }),
-  ],
-
-});
-
-
-export default function AnalyticsComponent({ children }: { children: React.ReactNode }) {
+export default function AnalyticsComponent({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const [consent, setConsent] = useState<boolean>(() => {
+    console.log('initialize', hasCookie(COOKIE_CONSENT_KEY));
+    return hasCookie(COOKIE_CONSENT_KEY);
+  });
+  const doNotTrack = doNotTrackEnabled();
+
+  const analytics = Analytics({
+    app: GTM_APP_NAME,
+    debug: true,
+    plugins: [
+      googleTagManager({
+        containerId: env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID,
+        enabled: consent && !doNotTrack,
+      }),
+    ],
+  });
 
   useEffect(() => {
+    analytics.identify(GTM_APP_NAME);
     analytics.page();
-  }, [pathname, searchParams])
+  }, [analytics, pathname, searchParams]);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      analytics.identify(GTM_APP_NAME)
-
-      setCookies([...defaultCookies]); // initialize default consents
-
-      const gtag = gtagFn('dataLayer', 'google_tag_manager');
+    const onMount = () => {
+      if (typeof window === 'undefined') return;
+      const gtag = gtagFn('dataLayer', 'gtag');
+      setInitialCookies([...defaultCookies]);
+      setInitialCookies([...adCookies], true);
       if (typeof gtag === 'function') {
         gtag?.('set', redactionCookie, true); // set redaction cookie by default
         gtag?.('consent', 'default', {
-          ...getCookies([...defaultCookies]) // initialize default consents
+          ...getCookies([...defaultCookies, ...adCookies]), // initialize default consents
+        });
+
+        analytics.track('consent-success', {
+          consent: 'success',
+          ...getCookies([...defaultCookies, ...adCookies]),
+          gtagState: typeof gtag,
+        });
+
+        if (hasCookie(COOKIE_CONSENT_KEY)) {
+          console.log('app cookie exists');
+          setConsent(true);
+        } else {
+          console.log('setting app cookie');
+        }
+      } else {
+        // console.log('gtag not found');
+        analytics.track('consent-issue', {
+          consent: 'error',
+          ...getCookies([...defaultCookies, ...adCookies]),
+          gtagState: typeof gtag,
         });
       }
+    };
+    onMount();
+    setConsent(hasCookie(COOKIE_CONSENT_KEY));
 
-      analytics.track('consent', {
-        consent: 'default',
-        ...getCookies([...defaultCookies])
-      })
-    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <AnalyticsProvider instance={analytics}>
       {children}
+      <ConsentBanner consent={consent} />
+      {hasCookie(COOKIE_CONSENT_KEY) && <VercelAnalytics />}
     </AnalyticsProvider>
-  )
+  );
 }
