@@ -28,9 +28,22 @@
   //   "^@/(lib|providers)/[^/]*type$",
   //   "^[^/]*type$"
   // ],
-  "cSpell.words": [
-    "datetime"
-  ],
+
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "always"
+    }
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "always"
+    }
+  },
+  "cSpell.words": ["datetime", "gtag"],
   "workbench.colorCustomizations": {
     "commandCenter.border": "#15202b99",
     "sash.hoverBorder": "#65c89b",
