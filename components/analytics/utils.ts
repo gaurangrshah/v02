@@ -1,18 +1,6 @@
-import { cookieExpiry } from './constants';
-import { getCookie, setCookie } from 'cookies-next';
+import { COOKIE_CONSENT_KEY, cookieExpiry } from './constants';
+import { getCookie, hasCookie, setCookie } from 'cookies-next';
 
-/**
- * @SEE: Dashboard: https://tagassistant.google.com/
- * @SEE: https://gist.github.com/dobesv/0dba69925b8975e69b3392da46063db2
- * @SEE: https://developers.google.com/tag-platform/security/guides/consent?consentmode=advanced
- * Analytics package setups up tag manager on the window as 'google_tag_manager
- * not as 'gtag' as expected by the gtag function.
- * This function is a workaround to set up the gtag function on the window
- *
- * @param {DataLayerName} dataLayerName
- * @param {GtagName} gtagName
- * @return {*}  {((..._args: any[]) => any)}
- */
 export type DataLayerName = 'dataLayer' | 'ga4DataLayer' | 'adwordsDataLayer';
 export type GtagName =
   | 'gtag'
@@ -26,6 +14,18 @@ export type GTagFn = (
   params?: Record<string, any>
 ) => void;
 
+/**
+ * @SEE: Dashboard: https://tagassistant.google.com/
+ * @SEE: https://gist.github.com/dobesv/0dba69925b8975e69b3392da46063db2
+ * @SEE: https://developers.google.com/tag-platform/security/guides/consent?consentmode=advanced
+ * Analytics package setups up tag manager on the window as 'google_tag_manager
+ * not as 'gtag' as expected by the gtag function.
+ * This function is a workaround to set up the gtag function on the window
+ *
+ * @param {DataLayerName} dataLayerName
+ * @param {GtagName} gtagName
+ * @return {*}  {((..._args: any[]) => any)}
+ */
 export const gtagFn = (
   dataLayerName: DataLayerName,
   gtagName: GtagName
@@ -51,19 +51,30 @@ export function consentUpdateEvent(
   consent: Record<string, boolean>,
   update?: boolean
 ) {
-  const gTag = gtagFn('dataLayer', 'google_tag_manager');
+  const gTag = gtagFn('dataLayer', 'gtag');
   if (typeof gTag === 'function') {
     Object.entries(consent).forEach(([key, value]) => {
-      setCookie('app-consent', true, { maxAge: cookieExpiry });
+      setCookie(COOKIE_CONSENT_KEY, 1, { maxAge: cookieExpiry });
       setCookie(key, value ? 1 : 0, { maxAge: cookieExpiry });
       gTag('consent', update ? 'update' : 'default', {
         [key]: getConsent(value),
       });
     });
+    return;
   } else {
     console.log('gtag not found');
     console.log('cookie not set', consent);
+    return;
   }
+}
+/**
+ * Set the app consent cookie based on the user's action
+ *
+ * @export
+ * @param {boolean} [consent]
+ */
+export function setAppConsentCookie(consent?: boolean) {
+  setCookie(COOKIE_CONSENT_KEY, consent ? 1 : 0, { maxAge: cookieExpiry });
 }
 
 /**
@@ -93,6 +104,20 @@ export function setCookies(cookieList: string[], denied?: boolean) {
     console.warn('No cookies to set');
   }
 }
+
+export function setInitialCookies(cookieList: string[], denied?: boolean) {
+  if (typeof window !== 'undefined' && cookieList?.length) {
+    cookieList.forEach((cookie) => {
+      if (hasCookie(cookie)) {
+        return;
+      }
+      setCookie(cookie, !denied ? 1 : 0, { maxAge: cookieExpiry });
+    });
+  } else {
+    console.warn('No cookies to set');
+  }
+}
+
 /**
  * Get cookies based on the cookieList
  * will return a list of cookies with a boolean value based on the consent
@@ -107,11 +132,8 @@ export function setCookies(cookieList: string[], denied?: boolean) {
 export function getCookies(cookieList: string[], skipConsent?: boolean) {
   if (typeof window !== 'undefined' && cookieList?.length) {
     return cookieList.reduce((acc, cookie) => {
-      if (skipConsent) {
-        return { ...acc, [cookie]: !!getCookie(cookie) };
-      } else {
-        return { ...acc, [cookie]: getConsent(!!getCookie(cookie)) };
-      }
+      const result = !!Number(getCookie(cookie));
+      return { ...acc, [cookie]: skipConsent ? result : getConsent(result) };
     }, {});
   }
   return [];
