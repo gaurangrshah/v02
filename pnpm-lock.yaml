@@ -5,12 +5,6 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
-  '@analytics/google-analytics':
-    specifier: ^1.0.7
-    version: 1.0.7
-  '@analytics/google-tag-manager':
-    specifier: ^0.5.5
-    version: 0.5.5
   '@hookform/resolvers':
     specifier: ^3.3.4
     version: 3.3.4(react-hook-form@7.50.1)
@@ -71,12 +65,6 @@ dependencies:
   '@vercel/speed-insights':
     specifier: ^1.0.10
     version: 1.0.10(next@14.1.0)(react@18.2.0)
-  analytics:
-    specifier: ^0.8.11
-    version: 0.8.11(@types/dlv@1.1.4)
-  analytics-plugin-do-not-track:
-    specifier: ^0.1.5
-    version: 0.1.5
   class-variance-authority:
     specifier: ^0.7.0
     version: 0.7.0
@@ -113,9 +101,6 @@ dependencies:
   react:
     specifier: ^18
     version: 18.2.0
-  react-cookie-consent:
-    specifier: ^9.0.0
-    version: 9.0.0(react@18.2.0)
   react-dom:
     specifier: ^18
     version: 18.2.0(react@18.2.0)
@@ -157,9 +142,6 @@ devDependencies:
   '@types/react-dom':
     specifier: ^18
     version: 18.2.19
-  '@types/use-analytics':
-    specifier: ^0.0.3
-    version: 0.0.3(@types/dlv@1.1.4)
   autoprefixer:
     specifier: ^10.0.1
     version: 10.4.17(postcss@8.4.35)
@@ -206,55 +188,6 @@ packages:
   /@alloc/quick-lru@5.2.0:
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
     engines: {node: '>=10'}
-
-  /@analytics/cookie-utils@0.2.12:
-    resolution: {integrity: sha512-2h/yuIu3kmu+ZJlKmlT6GoRvUEY2k1BbQBezEv5kGhnn9KpmzPz715Y3GmM2i+m7Y0QmBdVUoA260dQZkofs2A==}
-    dependencies:
-      '@analytics/global-storage-utils': 0.1.7
-
-  /@analytics/core@0.12.9(@types/dlv@1.1.4):
-    resolution: {integrity: sha512-jac5Q8iapeDiURFu6BXqT9FCHOENaazKgWXNdlr5lqE9X70XRDi+96weNVNUmkUoAjcP9Yf+xFwGy2dhP5+BnQ==}
-    dependencies:
-      '@analytics/global-storage-utils': 0.1.7
-      '@analytics/type-utils': 0.6.2
-      analytics-utils: 1.0.12(@types/dlv@1.1.4)
-    transitivePeerDependencies:
-      - '@types/dlv'
-
-  /@analytics/global-storage-utils@0.1.7:
-    resolution: {integrity: sha512-V+spzGLZYm4biZT4uefaylm80SrLXf8WOTv9hCgA46cLcyxx3LD4GCpssp1lj+RcWLl/uXJQBRO4Mnn/o1x6Gw==}
-    dependencies:
-      '@analytics/type-utils': 0.6.2
-
-  /@analytics/google-analytics@1.0.7:
-    resolution: {integrity: sha512-KZ69NaMIi5kOcouzqI8cu7tZgQl7ziGiRahfU6zniUf32G8bv7wQDh73JFz1NwO6gBPloUc+5BzEoWzScM5Rgw==}
-    dev: false
-
-  /@analytics/google-tag-manager@0.5.5:
-    resolution: {integrity: sha512-bYTzseT3DRwMhkWr0+zJH6BHdk5FDZv1TqU5dHseh60zf/sl3LlWUbb8Lgl41LAOmA2Qy1frJXr3mIO1Tak8Yg==}
-    dev: false
-
-  /@analytics/localstorage-utils@0.1.10:
-    resolution: {integrity: sha512-uJS+Jp1yLG5VFCgA5T82ZODYBS0xuDQx0NtAZrgbqt9j51BX3TcgmOez5LVkrUNu/lpbxjCLq35I4TKj78VmOQ==}
-    dependencies:
-      '@analytics/global-storage-utils': 0.1.7
-
-  /@analytics/session-storage-utils@0.0.7:
-    resolution: {integrity: sha512-PSv40UxG96HVcjY15e3zOqU2n8IqXnH8XvTkg1X43uXNTKVSebiI2kUjA3Q7ESFbw5DPwcLbJhV7GforpuBLDw==}
-    dependencies:
-      '@analytics/global-storage-utils': 0.1.7
-
-  /@analytics/storage-utils@0.4.2:
-    resolution: {integrity: sha512-AXObwyVQw9h2uJh1t2hUgabtVxzYpW+7uKVbdHQK80vr3Td5rrmCxrCxarh7HUuAgSDZ0bZWqmYxVgmwKceaLg==}
-    dependencies:
-      '@analytics/cookie-utils': 0.2.12
-      '@analytics/global-storage-utils': 0.1.7
-      '@analytics/localstorage-utils': 0.1.10
-      '@analytics/session-storage-utils': 0.0.7
-      '@analytics/type-utils': 0.6.2
-
-  /@analytics/type-utils@0.6.2:
-    resolution: {integrity: sha512-TD+xbmsBLyYy/IxFimW/YL/9L2IEnM7/EoV9Aeh56U64Ify8o27HJcKjo38XY9Tcn0uOq1AX3thkKgvtWvwFQg==}
 
   /@babel/code-frame@7.23.5:
     resolution: {integrity: sha512-CgH3s1a96LipHCmSUmYFPwY7MNx8C3avkq7i4Wl3cfa662ldtUe4VM1TPXX70pfmrlWTb6jLqTYrZyT2ZTJBgA==}
@@ -2802,9 +2735,6 @@ packages:
       '@types/node': 20.11.19
     dev: false
 
-  /@types/dlv@1.1.4:
-    resolution: {integrity: sha512-m8KmImw4Jt+4rIgupwfivrWEOnj1LzkmKkqbh075uG13eTQ1ZxHWT6T0vIdSQhLIjQCiR0n0lZdtyDOPO1x2Mw==}
-
   /@types/eslint-scope@3.7.7:
     resolution: {integrity: sha512-MzMFlSLBqNF2gcHWO0G1vP/YQyfvrxZ0bF+u7mzUdZ1/xK4A4sru+nraZz5i3iEIk1l1uyicaDVTB4QbbEkAYg==}
     dependencies:
@@ -2876,15 +2806,6 @@ packages:
 
   /@types/scheduler@0.16.8:
     resolution: {integrity: sha512-WZLiwShhwLRmeV6zH+GkbOFT6Z6VklCItrDioxUnv+u4Ll+8vKeFySoFyK/0ctcRpOmwAicELfmys1sDc/Rw+A==}
-
-  /@types/use-analytics@0.0.3(@types/dlv@1.1.4):
-    resolution: {integrity: sha512-s/b/R8q/pKj1INYyRWw46aI4rZFr6p0yW80EdD47FBytTGXPNJFOaPlvw2Atsrf+k6S4idl1nN5kXiLBl1MrJQ==}
-    dependencies:
-      '@types/react': 18.2.55
-      analytics: 0.8.11(@types/dlv@1.1.4)
-    transitivePeerDependencies:
-      - '@types/dlv'
-    dev: true
 
   /@types/webpack@5.28.5(@swc/core@1.3.101)(esbuild@0.19.11):
     resolution: {integrity: sha512-wR87cgvxj3p6D0Crt1r5avwqffqPXUkNlnQ1mjU93G7gCuFjufZR4I6j8cz5g1F1tTYpfOOFvly+cmIQwL9wvw==}
@@ -3178,27 +3099,6 @@ packages:
       fast-json-stable-stringify: 2.1.0
       json-schema-traverse: 0.4.1
       uri-js: 4.4.1
-
-  /analytics-plugin-do-not-track@0.1.5:
-    resolution: {integrity: sha512-Bnadur6Y8UB2GrZD11SXAmIVraPpsVINcU8cgbq6ynJIE00xrcJ/RhqFdqqIM7Heyuze93FhcEKLl5WGV9N9mA==}
-    dev: false
-
-  /analytics-utils@1.0.12(@types/dlv@1.1.4):
-    resolution: {integrity: sha512-WvV2YWgsnXLxaY0QYux0crpBAg/0JA763NmbMVz22jKhMPo7dpTBet8G2IlF7ixTjLDzGlkHk1ZaKqqQmjJ+4w==}
-    peerDependencies:
-      '@types/dlv': ^1.0.0
-    dependencies:
-      '@analytics/type-utils': 0.6.2
-      '@types/dlv': 1.1.4
-      dlv: 1.1.3
-
-  /analytics@0.8.11(@types/dlv@1.1.4):
-    resolution: {integrity: sha512-gNLaprOiuZSviP8rC99E5uk+AWQZJk1OHS350v3XdpPDnsGyxHlNo7s9ZQJeOhvMbG5XOBY3fgZY/tpOl7hiGw==}
-    dependencies:
-      '@analytics/core': 0.12.9(@types/dlv@1.1.4)
-      '@analytics/storage-utils': 0.4.2
-    transitivePeerDependencies:
-      - '@types/dlv'
 
   /ansi-regex@2.1.1:
     resolution: {integrity: sha512-TIGnTpdo+E3+pCyAluZvtED5p5wCqLdezCyhPZzKPcxvFplEt4i+W7OONCKgeZFT3+y5NZZfOOS/Bdcanm1MYA==}
@@ -5413,10 +5313,6 @@ packages:
       nopt: 7.2.0
     dev: false
 
-  /js-cookie@2.2.1:
-    resolution: {integrity: sha512-HvdH2LzI/EAZcUwA8+0nKNtWHqS+ZmijLA30RwZA0bo7ToCckjK5MkGhjED9KoRcXO6BaGI3I9UIzSA1FKFPOQ==}
-    dev: false
-
   /js-cookie@3.0.5:
     resolution: {integrity: sha512-cEiJEAEoIbWfCZYKWhVwFuvPX1gETRYPw6LlaTKoxD3s2AkXzkCjnp6h0V77ozyqj0jakteJ4YqDJT830+lVGw==}
     engines: {node: '>=14'}
@@ -6307,16 +6203,6 @@ packages:
     resolution: {integrity: sha512-vYl3iOX+4CKUWuxGi9Ukhie6fsqXqS9FE2Zaic4tNFD2N2QQaXOMFbuKK4QmDHC0JO6B1Zp41J0LpT0oR68amQ==}
     dependencies:
       safe-buffer: 5.2.1
-    dev: false
-
-  /react-cookie-consent@9.0.0(react@18.2.0):
-    resolution: {integrity: sha512-Blyj+m+Zz7SFHYqT18p16EANgnSg2sIyU6Yp3vk83AnOnSW7qnehPkUe4+8+qxztJrNmCH5GP+VHsWzAKVOoZA==}
-    engines: {node: '>=10'}
-    peerDependencies:
-      react: '>=16'
-    dependencies:
-      js-cookie: 2.2.1
-      react: 18.2.0
     dev: false
 
   /react-dom@18.2.0(react@18.2.0):
