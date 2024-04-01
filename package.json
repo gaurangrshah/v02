@@ -23,6 +23,7 @@
     "email": "email dev"
   },
   "dependencies": {
+    "@gshah.dev/transparency": "^0.0.45",
     "@hookform/resolvers": "^3.3.4",
     "@libsql/client": "^0.5.1",
     "@lucia-auth/adapter-sqlite": "2.0.1",
