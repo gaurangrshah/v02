@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { XMLParser } from 'fast-xml-parser';
 
 import { PopoverViewer } from '@/components/popover/popover-viewer';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -10,11 +10,6 @@ import { ARTICLES } from '@/config/data/articles';
 import { ArrowUpRight } from 'lucide-react';
 import { BlurImage } from '@/components/blur-image';
 
-
-const articlesSchema = z.object({ title: z.string(), thumbnail: z.string(), link: z.string(), pubDate: z.string(), description: z.string() });
-
-type Article = z.infer<typeof articlesSchema>;
-
 type ParsedArticle = {
   title: string;
   thumbnail: string;
@@ -23,10 +18,18 @@ type ParsedArticle = {
   description: string;
 };
 
+type RssItem = {
+  title: string;
+  link: string;
+  description: string;
+  pubDate: string;
+  'content:encoded'?: string;
+};
+
 async function fetchArticles(): Promise<ParsedArticle[]> {
   try {
     const response = await fetch(
-      'https://api.rss2json.com/v1/api.json?rss_url=https://blog.gshahdev.com/rss.xml',
+      'https://blog.gshahdev.com/rss.xml',
       { next: { revalidate: 3600 } } // Cache for 1 hour
     );
 
@@ -35,27 +38,39 @@ async function fetchArticles(): Promise<ParsedArticle[]> {
       return [];
     }
 
-    const data = await response.json();
+    const xml = await response.text();
 
-    if (!data?.items?.length) {
+    const parser = new XMLParser({
+      ignoreAttributes: false,
+      attributeNamePrefix: '@_',
+    });
+
+    const parsed = parser.parse(xml);
+    const items = parsed?.rss?.channel?.item;
+
+    if (!items?.length) {
       return [];
     }
 
-    return data.items
-      .map((item: Article) => {
-        const result = articlesSchema.safeParse(item);
-        if (result.success) {
-          return {
-            title: truncate(item.title, 36),
-            thumbnail: item.thumbnail,
-            link: item.link,
-            pubDate: item.pubDate,
-            description: truncate(item.description.replace(/(<([^>]+)>)/gi, ""), 145)
-          };
-        }
-        return null;
-      })
-      .filter((item: ParsedArticle | null): item is ParsedArticle => item !== null);
+    return items.map((item: RssItem) => {
+      // Extract first image from content:encoded if available
+      const content = item['content:encoded'] || '';
+      const imgMatch = content.match(/<img[^>]+src=["']([^"']+)["']/);
+      const thumbnail = imgMatch ? imgMatch[1] : '';
+
+      // Clean description - remove CDATA wrapper and HTML tags
+      const cleanDescription = (item.description || '')
+        .replace(/(<([^>]+)>)/gi, '')
+        .trim();
+
+      return {
+        title: truncate(item.title || '', 36),
+        thumbnail,
+        link: item.link || '',
+        pubDate: item.pubDate || '',
+        description: truncate(cleanDescription, 145),
+      };
+    });
   } catch (error) {
     console.error('Blog fetch error:', error);
     return [];
