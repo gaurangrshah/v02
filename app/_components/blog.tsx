@@ -1,17 +1,12 @@
-"use server";
-
-import Image from 'next/image';
-
 import { z } from 'zod';
 
 import { PopoverViewer } from '@/components/popover/popover-viewer';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
-import { cn, truncate } from '@/lib/utils';
+import { truncate } from '@/lib/utils';
 
 import { SectionTitle } from './section-title';
 import { ARTICLES } from '@/config/data/articles';
-import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { ArrowUpRight } from 'lucide-react';
 import { BlurImage } from '@/components/blur-image';
 
@@ -20,23 +15,57 @@ const articlesSchema = z.object({ title: z.string(), thumbnail: z.string(), link
 
 type Article = z.infer<typeof articlesSchema>;
 
-export async function Blog() {
-  const response = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://blog.gshahdev.com/rss.xml')
-  const data = await response.json()
-  const articles = data.items.map((item: Article) => {
-    if (articlesSchema.parse(item)) {
-      return {
-        title: truncate(item.title, 36),
-        thumbnail: item.thumbnail,
-        link: item.link,
-        pubDate: item.pubDate,
-        // description is a string with html tags, so we need to remove them
-        description: truncate(item.description.replace(/(<([^>]+)>)/gi, ""), 145)
-      }
-    } else return null;
-  });
+type ParsedArticle = {
+  title: string;
+  thumbnail: string;
+  link: string;
+  pubDate: string;
+  description: string;
+};
 
-  function getThumbnails(article: Article) {
+async function fetchArticles(): Promise<ParsedArticle[]> {
+  try {
+    const response = await fetch(
+      'https://api.rss2json.com/v1/api.json?rss_url=https://blog.gshahdev.com/rss.xml',
+      { next: { revalidate: 3600 } } // Cache for 1 hour
+    );
+
+    if (!response.ok) {
+      console.error('RSS fetch failed:', response.status);
+      return [];
+    }
+
+    const data = await response.json();
+
+    if (!data?.items?.length) {
+      return [];
+    }
+
+    return data.items
+      .map((item: Article) => {
+        const result = articlesSchema.safeParse(item);
+        if (result.success) {
+          return {
+            title: truncate(item.title, 36),
+            thumbnail: item.thumbnail,
+            link: item.link,
+            pubDate: item.pubDate,
+            description: truncate(item.description.replace(/(<([^>]+)>)/gi, ""), 145)
+          };
+        }
+        return null;
+      })
+      .filter((item: ParsedArticle | null): item is ParsedArticle => item !== null);
+  } catch (error) {
+    console.error('Blog fetch error:', error);
+    return [];
+  }
+}
+
+export async function Blog() {
+  const articles = await fetchArticles();
+
+  function getThumbnails(article: ParsedArticle) {
     return ARTICLES.filter((a) => a.url === article.link).map((a) => a.image)[0];
   }
 
@@ -54,7 +83,7 @@ export async function Blog() {
       <div>
         <ScrollArea className="h-[30rem] w-full rounded-md px-3 pt-4">
           <ul className="group/list">
-            {articles?.length ? articles.map((article: { title: string; thumbnail: string; link: string; pubDate: string; description: string; }, i: number) => (
+            {articles.length > 0 ? articles.map((article, i) => (
               <PopoverViewer title={article.title} description={article.description} tags={[]} image={{ src: getThumbnails(article), alt: article.title }} key={i}>
                 <li key={i} className="mb-12">
                   <div className="group relative grid grid-cols-8 gap-4 sm:items-center sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50 px-3 transition-all">
