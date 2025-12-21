@@ -41,6 +41,11 @@ export default function RootLayout({
       <body className={GeistSans.className} suppressHydrationWarning>
         <RootProviders>{children}</RootProviders>
       </body>
+      <Script
+        defer
+        src="https://umami.internal.muhaha.dev/script.js"
+        data-website-id="ef50a03a-9ed2-4cc7-a2a0-82a656995724"
+      />
     </html>
   );
 }
