@@ -43,7 +43,7 @@ export default function RootLayout({
       </body>
       <Script
         defer
-        src="https://umami.internal.muhaha.dev/script.js"
+        src="https://analytics.h1a1ah.com/script.js"
         data-website-id="ef50a03a-9ed2-4cc7-a2a0-82a656995724"
       />
     </html>
