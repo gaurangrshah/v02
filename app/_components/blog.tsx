@@ -1,5 +1,3 @@
-import { XMLParser } from 'fast-xml-parser';
-
 import { PopoverViewer } from '@/components/popover/popover-viewer';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
@@ -18,59 +16,69 @@ type ParsedArticle = {
   description: string;
 };
 
-type RssItem = {
+type HashnodePostNode = {
   title: string;
-  link: string;
-  description: string;
-  pubDate: string;
-  'content:encoded'?: string;
+  brief: string;
+  url: string;
+  publishedAt: string;
+  coverImage: { url: string } | null;
 };
+
+type HashnodeResponse = {
+  data?: {
+    publication?: {
+      posts?: {
+        edges?: { node: HashnodePostNode }[];
+      };
+    };
+  };
+};
+
+const HASHNODE_QUERY = `
+  query PublicationPosts($host: String!, $first: Int!) {
+    publication(host: $host) {
+      posts(first: $first) {
+        edges {
+          node {
+            title
+            brief
+            url
+            publishedAt
+            coverImage { url }
+          }
+        }
+      }
+    }
+  }
+`;
 
 async function fetchArticles(): Promise<ParsedArticle[]> {
   try {
-    const response = await fetch(
-      'https://blog.gshahdev.com/rss.xml',
-      { next: { revalidate: 3600 } } // Cache for 1 hour
-    );
+    const response = await fetch('https://gql.hashnode.com/', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        query: HASHNODE_QUERY,
+        variables: { host: 'blog.gshahdev.com', first: 10 },
+      }),
+      next: { revalidate: 3600 },
+    });
 
     if (!response.ok) {
-      console.error('RSS fetch failed:', response.status);
+      console.error('Hashnode fetch failed:', response.status);
       return [];
     }
 
-    const xml = await response.text();
+    const json = (await response.json()) as HashnodeResponse;
+    const edges = json?.data?.publication?.posts?.edges ?? [];
 
-    const parser = new XMLParser({
-      ignoreAttributes: false,
-      attributeNamePrefix: '@_',
-    });
-
-    const parsed = parser.parse(xml);
-    const items = parsed?.rss?.channel?.item;
-
-    if (!items?.length) {
-      return [];
-    }
-
-    return items.map((item: RssItem) => {
-      // Extract first image from content:encoded if available
-      const content = item['content:encoded'] || '';
-      const imgMatch = content.match(/<img[^>]+src=["']([^"']+)["']/);
-      const thumbnail = imgMatch ? imgMatch[1] : '';
-
-      // Clean description - remove CDATA wrapper and HTML tags
-      const cleanDescription = (item.description || '')
-        .replace(/(<([^>]+)>)/gi, '')
-        .trim();
-
-      return {
-        title: truncate(item.title || '', 36),
-        thumbnail,
-        link: item.link || '',
-        pubDate: item.pubDate || '',
-        description: truncate(cleanDescription, 145),
-      };
-    });
+    return edges.map(({ node }) => ({
+      title: truncate(node.title || '', 36),
+      thumbnail: node.coverImage?.url ?? '',
+      link: node.url || '',
+      pubDate: node.publishedAt || '',
+      description: truncate(node.brief || '', 145),
+    }));
   } catch (error) {
     console.error('Blog fetch error:', error);
     return [];
