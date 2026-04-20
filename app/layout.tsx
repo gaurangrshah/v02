@@ -4,7 +4,6 @@ import type { Metadata } from 'next';
 import { GeistSans } from 'geist/font/sans';
 
 import RootProviders from './root-providers';
-import Script from 'next/script';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://gshahdev.com/'),
@@ -41,11 +40,7 @@ export default function RootLayout({
       <body className={GeistSans.className} suppressHydrationWarning>
         <RootProviders>{children}</RootProviders>
       </body>
-      <Script
-        defer
-        src="https://analytics.h1a1ah.com/script.js"
-        data-website-id="ef50a03a-9ed2-4cc7-a2a0-82a656995724"
-      />
+      {/* TODO: add Swetrix analytics — see infra/coolify-infra#88 */}
     </html>
   );
 }
