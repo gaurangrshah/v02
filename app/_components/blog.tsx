@@ -32,6 +32,7 @@ type HashnodeResponse = {
       };
     };
   };
+  errors?: { message: string; path?: (string | number)[] }[];
 };
 
 const HASHNODE_QUERY = `
@@ -52,25 +53,91 @@ const HASHNODE_QUERY = `
   }
 `;
 
+const HASHNODE_ENDPOINT = 'https://gql.hashnode.com/';
+const FETCH_TIMEOUT_MS = 8000;
+// User-Agent: some edge protections (Cloudflare, etc.) challenge or block
+// requests with empty/default Node UAs. Identify ourselves clearly.
+const USER_AGENT = 'gshah.dev-blog-fetcher/1.0 (+https://www.gshah.dev)';
+
 async function fetchArticles(): Promise<ParsedArticle[]> {
   try {
-    const response = await fetch('https://gql.hashnode.com/', {
+    const response = await fetch(HASHNODE_ENDPOINT, {
       method: 'POST',
-      headers: { 'content-type': 'application/json' },
+      headers: {
+        'content-type': 'application/json',
+        accept: 'application/json',
+        'user-agent': USER_AGENT,
+      },
       body: JSON.stringify({
         query: HASHNODE_QUERY,
         variables: { host: 'blog.gshahdev.com', first: 10 },
       }),
       next: { revalidate: 3600 },
+      signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
     });
 
+    // Read as text first so we can diagnose non-JSON responses without
+    // throwing in parseJSONFromBytes (the original "Unexpected token '<'" bug).
+    const contentType = response.headers.get('content-type') ?? '';
+    const bodyText = await response.text();
+
     if (!response.ok) {
-      console.error('Hashnode fetch failed:', response.status);
+      console.error(
+        'Hashnode fetch failed:',
+        response.status,
+        'content-type:',
+        contentType,
+        'body[0..200]:',
+        bodyText.slice(0, 200),
+      );
       return [];
     }
 
-    const json = (await response.json()) as HashnodeResponse;
-    const edges = json?.data?.publication?.posts?.edges ?? [];
+    // Sniff for HTML / non-JSON responses (Cloudflare challenge, 5xx error
+    // pages from intermediates, etc.) BEFORE calling JSON.parse so the
+    // failure mode is a logged warning, not a thrown SyntaxError.
+    const looksLikeHtml =
+      bodyText.trimStart().startsWith('<') ||
+      contentType.includes('text/html');
+    if (looksLikeHtml || !contentType.includes('json')) {
+      console.error(
+        'Hashnode returned non-JSON response. status:',
+        response.status,
+        'content-type:',
+        contentType,
+        'body[0..200]:',
+        bodyText.slice(0, 200),
+      );
+      return [];
+    }
+
+    let json: HashnodeResponse;
+    try {
+      json = JSON.parse(bodyText) as HashnodeResponse;
+    } catch (parseError) {
+      console.error(
+        'Hashnode JSON parse failed:',
+        parseError,
+        'content-type:',
+        contentType,
+        'body[0..200]:',
+        bodyText.slice(0, 200),
+      );
+      return [];
+    }
+
+    if (json.errors?.length) {
+      console.error(
+        'Hashnode GraphQL errors:',
+        json.errors.map((e) => e.message).join('; '),
+      );
+      // Fall through if there is still partial data; otherwise bail.
+      if (!json.data?.publication?.posts?.edges?.length) {
+        return [];
+      }
+    }
+
+    const edges = json.data?.publication?.posts?.edges ?? [];
 
     return edges.map(({ node }) => ({
       title: truncate(node.title || '', 36),
