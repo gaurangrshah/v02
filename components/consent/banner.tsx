@@ -36,7 +36,7 @@ export default function Banner(props: IBannerProps) {
   const ContentSlot = asChild ? Slot : BannerContent;
 
   return (
-    <div className='fixed inset-x-0 bottom-10 z-10 mx-auto max-w-3xl'>
+    <div className='fixed inset-x-0 bottom-44 z-10 mx-auto max-w-3xl'>
       <div className={cn(background, bannerClass)}>
         {leftElement ? leftElement : <Cookie className='h-8 w-8' />}
         <ContentSlot {...rest}>{props.children}</ContentSlot>

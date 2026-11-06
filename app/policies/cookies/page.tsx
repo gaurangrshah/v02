@@ -73,7 +73,7 @@ function Section({
 
 export default function CookiePolicyPage() {
   return (
-    <main className='mx-auto w-full max-w-3xl space-y-10 px-4 pb-48 pt-12 text-foreground sm:px-6'>
+    <main className='mx-auto w-full max-w-3xl space-y-10 px-4 pb-96 pt-12 text-foreground sm:px-6'>
       <div className='space-y-3'>
         <Link href='/' className='text-sm text-muted-foreground hover:underline'>
           &larr; Back to home
