@@ -26,7 +26,7 @@ export function BannerContent(props: IBannerContentProps) {
         using our site, you agree to the terms outlined in our{" "}
         <Link
           href={props.href ?? "/policies/cookies"}
-          className="text-primary-500 dark:text-primary-400 hover:underline text-gray-500"
+          className="text-primary-500 dark:text-primary-400 hover:underline text-gray-500 dark:text-gray-300"
         >
           {props.label ?? "cookie policy"}
         </Link>

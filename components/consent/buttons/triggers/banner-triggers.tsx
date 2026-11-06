@@ -18,7 +18,7 @@ export interface IBannerTriggersProps {
 
 export const _buttons = [
   { children: 'Show Me', variant: 'outline', type: 'button', size: 'sm' },
-  { children: 'Got it', variant: 'default', type: 'submit', size: 'sm' },
+  { children: 'Got it', variant: 'default', type: 'submit', size: 'sm', className: 'text-white' },
 ];
 
 export const isPro = !(process.env.NEXT_PUBLIC_FEATURE_PRO === 'true');
