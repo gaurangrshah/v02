@@ -33,7 +33,7 @@ export function Experiments() {
       <ScrollArea className="h-[30rem] w-full rounded-md px-3 pt-4">
         <ul className="group/list pr-2">
           {EXPERIMENTS.map((experiment, i) => (
-            <PopoverViewer title={experiment.title} description={experiment.description} tags={experiment.technologies} image={{ src: experiment.image, alt: experiment.title }} key={i}>
+            <PopoverViewer title={experiment.title} description={experiment.description} tags={experiment.technologies} image={{ src: experiment.image, alt: experiment.title }} video={experiment.video} key={i}>
               <li key={i} className="mb-12">
                 <div className="group relative grid gap-4 pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50 md:px-2">
                   <div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-emerald-800/10 dark:lg:group-hover:bg-emerald-800/20 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg" />

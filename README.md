@@ -26,7 +26,7 @@ pnpm turso:dev
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser.
+Open [http://localhost:4327](http://localhost:4327) with your browser. Set `PORT` to override the port.
 
 ## Scripts
 

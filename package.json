@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p ${PORT:-4327}",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p ${PORT:-4327}",
     "lint": "next lint",
     "db:sync": "drizzle-kit generate:sqlite & drizzle-kit push:sqlite",
     "db:seed": "pnpm dlx tsx lib/db/seed.ts",

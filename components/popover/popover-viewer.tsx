@@ -16,10 +16,11 @@ type PopoverViewerProps = {
   description: string,
   tags: string[],
   image: { src: string; width?: number, height?: number; alt: string },
+  video?: string,
   children: React.ReactNode
 }
 
-export function PopoverViewer({ title, description, tags, image, children }: PopoverViewerProps) {
+export function PopoverViewer({ title, description, tags, image, video, children }: PopoverViewerProps) {
 
   const [open, setOpen] = useState(false)
 
@@ -39,7 +40,23 @@ export function PopoverViewer({ title, description, tags, image, children }: Pop
       </PopoverTrigger>
       <PopoverContent side="top" sideOffset={0} className="bg-white/20 backdrop-blur-lg">
         <h3 className="pb-3 font-semibold">{truncate(title, 25)}</h3>
-        <BlurImage src={image.src} alt={image.alt} />
+        {video ? (
+          <div className="relative aspect-video w-full overflow-hidden">
+            <video
+              src={video}
+              poster={image.src}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="none"
+              aria-label={image.alt}
+              className="h-full w-full object-cover"
+            />
+          </div>
+        ) : (
+          <BlurImage src={image.src} alt={image.alt} />
+        )}
         {!!tags.length ? (
           <div className="flex flex-wrap gap-2 mt-3">
             {tags.map((tag, i) => (
