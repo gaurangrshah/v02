@@ -14,7 +14,7 @@ export const auth = lucia({
     key: 'user_key',
     session: 'user_session',
   }),
-  env: 'DEV',
+  env: process.env.NODE_ENV === 'production' ? 'PROD' : 'DEV',
   middleware: nextjs_future(),
   sessionCookie: { expires: false },
   getUserAttributes: (data) => {
