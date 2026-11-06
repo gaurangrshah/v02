@@ -11,7 +11,7 @@ Personal portfolio and freelance web development business website.
 - **Database:** Turso (libSQL) + Drizzle ORM
 - **UI:** Radix UI + Tailwind CSS + shadcn/ui
 - **Email:** React Email + Resend
-- **Analytics:** Vercel Analytics, Speed Insights, Umami (personal team)
+- **Analytics:** Vercel Analytics, Speed Insights
 
 ## Getting Started
 
@@ -41,10 +41,9 @@ Open [http://localhost:4327](http://localhost:4327) with your browser. Set `PORT
 
 ## Deployment
 
-Deployed on Vercel with automatic deployments from main branch.
+Source of truth is Gitea (`personal/v02`). Gitea push-mirrors to GitHub (`gaurangrshah/v02`), and Vercel deploys production from GitHub `main`.
 
 ## Analytics
 
 - Vercel Analytics (built-in)
 - Vercel Speed Insights (built-in)
-- Umami (self-hosted, **personal** team)
