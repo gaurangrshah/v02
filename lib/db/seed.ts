@@ -3,6 +3,7 @@
 import { drizzle } from 'drizzle-orm/libsql';
 
 import { createClient } from '@libsql/client';
+import { generateLuciaPasswordHash } from 'lucia/utils';
 
 import { env } from '../env.mjs';
 import { keys, users } from './schema/auth';
@@ -11,6 +12,14 @@ const main = async () => {
   if (!env.DATABASE_URL) {
     throw new Error('DATABASE_URL is not defined');
   }
+
+  const seedPassword = process.env.SEED_USER_PASSWORD;
+  if (!seedPassword) {
+    throw new Error(
+      'SEED_USER_PASSWORD is not set. Set it in the environment before running db:seed.'
+    );
+  }
+  const hashedPassword = await generateLuciaPasswordHash(seedPassword);
 
   const client = createClient({
     url: env.DATABASE_URL,
@@ -42,8 +51,7 @@ const main = async () => {
     {
       id: 'username:gsdev',
       userId: me.id,
-      hashedPassword:
-        'REDACTED', // removed: see personal/v02#27
+      hashedPassword,
     },
   ];
 
